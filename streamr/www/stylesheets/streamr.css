@@ -1,3 +1,7 @@
+.fa {
+    color:white;
+}
+
 #search_toolbar {
     margin-top:0.8em;
     margin-bottom:1em;
@@ -9,7 +13,11 @@
 }
 
 #search_results > div:nth-child(2n) {
+    /*
+    Was used for the light theme
     background:#F0F0F0;
+    */
+    background:#484848;
 }
 
 #search_results .label {
