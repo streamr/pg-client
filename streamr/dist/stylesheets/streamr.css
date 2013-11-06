@@ -1,0 +1,33 @@
+#search_toolbar {
+    margin-top:0.8em;
+    margin-bottom:1em;
+}
+
+#search_results > div {
+    overflow:hidden;
+    padding:15px 15px;
+}
+
+#search_results > div:nth-child(2n) {
+    background:#F0F0F0;
+}
+
+#search_results .label {
+    background:#463265;
+    margin-top:5px;
+}
+
+#search_results .left {
+    float:left;
+    margin-right:1em;
+    max-width:30%;
+}
+
+#search_results .right {
+    float:left;
+    max-width:65%;
+}
+
+#search_results h3 {
+    margin-top:0;
+}
