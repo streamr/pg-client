@@ -1,3 +1,19 @@
+#content a {
+    text-decoration:underline;
+}
+
+#content .thumbnail {
+    float:right;
+    margin:0 0 10px 12px;
+}
+
+#content .label {
+    background:#463265;
+    display:inline-block;
+    padding:0.4em 1em;
+    font-size:0.9em;
+}
+
 .fa {
     color:white;
 }
@@ -13,7 +29,10 @@
 }
 
 #search_results > div:nth-child(2n) {
+    /*
+    Was used for the light theme
     background:#F0F0F0;
+    */
     background:#484848;
 }
 
@@ -35,4 +54,66 @@
 
 #search_results h3 {
     margin-top:0;
+}
+
+.navbar-top {
+    margin-left:-15px;
+    margin-right:-15px;
+}
+
+.navbar h2 {
+    display:inline-block;
+    margin: 0 0.6em;
+    max-width:55%;
+    font-size:1.9em;
+}
+
+.navbar {
+    padding:0.5em;
+}
+
+.back {
+    vertical-align:top;
+}
+
+#pick_streams {
+    float:right;
+    font-size:1.2em;
+}
+
+#content {
+    padding-bottom:5em;
+}
+
+#content h2 {
+    margin-top:0.2em;
+}
+
+#play_pause_button {
+    font-size:3.9em;
+}
+
+.navbar-fixed-bottom > * {
+    vertical-align:middle;
+}
+
+.navbar-fixed-bottom {
+    text-align:center;
+    padding:0.2em 0;
+}
+
+.navbar-fixed-bottom .timeline {
+    font-size:1.5em;
+    position:absolute;
+    top:0.5em;
+    left:0.5em;
+    padding:0.2em 0.5em;
+}
+
+.navbar-fixed-bottom .add_item {
+    font-size:1.5em;
+    position:absolute;
+    top:0.5em;
+    right:0.5em;
+    padding:0.2em 0.5em;
 }
