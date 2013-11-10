@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Title</title>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width">
+    <!-- Bootstrap -->
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/bootstrap-slate-theme.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/streamr.css" rel="stylesheet" media="screen">
+
+    <!-- cordova.js is served from localhost to ensure the correct version -->
+    <script src="http://localhost/appgyver/cordova.js"></script>
+    <script src="components/steroids-js/steroids.js"></script>
+
+    <script src="javascripts/jquery-2.0.3.min.js" type="text/javascript"></script>
+    <script src="javascripts/jquery.hammer.min.js" type="text/javascript"></script>
+    <script src="javascripts/streamr.js" type="text/javascript"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-top">
+            <button class="btn btn-default back" type="button"><i class="fa fa-angle-double-left"></i> Back</i></button>
+            <h2>Movie title</h2>
+        </nav>
+        <div class="row">
+            <div class="col-md-12" id="movie_details">
+                <h2>Streams</h2>
+                <button type="button" class="btn btn-primary" id="add_new_stream_button"><i class="fa fa-plus"></i> Create new stream</button>
+                <div class="streams">
+                    <div>
+                        <input id="stream_1" type="checkbox">
+                        <label for="stream_1">
+                            <span class="title">Movie mistakes</span>
+                            <span class="description">Funny stream containing movie mistakes</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input id="stream_10" type="checkbox">
+                        <label for="stream_10">
+                            <span class="title">Movie mistakes</span>
+                            <span class="description">Funny stream containing movie mistakes</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input id="stream_2" type="checkbox">
+                        <label for="stream_2">
+                            <span class="title">Movie mistakes</span>
+                            <span class="description">Funny stream containing movie mistakes</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input id="stream_3" type="checkbox">
+                        <label for="stream_3">
+                            <span class="title">Movie mistakes</span>
+                            <span class="description">Funny stream containing movie mistakes</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input id="stream_4" type="checkbox">
+                        <label for="stream_4">
+                            <span class="title">Movie mistakes</span>
+                            <span class="description">Funny stream containing movie mistakes</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+            <button ontouchend="window.location='playback.html'" type="button" class="btn btn-default" id="start_playing_button"><i class="fa fa-play-circle"></i> Start watching</button>
+        </nav>
+    </div>
+</body>
+</html>
+
+

@@ -1,7 +1,7 @@
 $(document).ready(function($) {
 
     $('#search_results > div').hammer().on('tap', function(event) {
-        window.location='playback.html';
+        window.location='movie_details.html';
         event.preventDefault();
         return false;
     });
@@ -11,5 +11,11 @@ $(document).ready(function($) {
         event.preventDefault();
         return false;
     });
+
+    $('#add_item_button').hammer().on('tap', function(event) {
+        var webView = new steroids.views.WebView("add_item.html");
+        //webView.preload();
+        steroids.modal.show(webView);
+    }); 
 
 });
