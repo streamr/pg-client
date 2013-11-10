@@ -1,8 +1,7 @@
 {
   "name": "mySteroidsProject",
   "version": "0.0.1",
-  "authors": [
-  ],
+  "authors": [],
   "ignore": [
     "**/.*",
     "node_modules",
@@ -12,6 +11,9 @@
     "tests"
   ],
   "dependencies": {
-    "steroids-js": "2.7.x"
+    "jquery": "~2.0.3",
+    "steroids-js": "2.7.x",
+    "hammerjs": "~1.0.5",
+    "topcoat": "~0.8.0"
   }
 }
