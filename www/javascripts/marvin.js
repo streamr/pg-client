@@ -13,7 +13,7 @@ var marvin = (function ($) {
     }
 
     var movies = (function () {
-        var searchUrl = "http://www.omdbapi.com/";
+        var searchUrl = baseUrl + '/movies';
 
         /*
         * Currently searches OMDb for data, should use our own api so that we can get the IDs
@@ -22,7 +22,7 @@ var marvin = (function ($) {
             $.ajax({
                 url: searchUrl,
                 data: {
-                    's': searchTerm,
+                    'q': searchTerm,
                 },
                 success: function (data) {
                     callback(data);
@@ -35,7 +35,7 @@ var marvin = (function ($) {
 
         /*
         * Create a movie with the given data.
-        * 
+        *
         */
         function create(data, callback){
             $.ajax({

@@ -21,6 +21,7 @@
     "smarttabs": true,
     "white": true,
     "globals": {
-        "jQuery": false
+        "jQuery": false,
+        "marvin": false
     }
 }

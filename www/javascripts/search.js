@@ -1,13 +1,11 @@
 (function ($, marvin) {
     "use strict";
 
-    alert("got here allright!");
-
     $('.movie-search').on('keyup', function () {
         var searchQuery = $(this).val();
-        marvin.movies.search(searchQuery, function (movies) {
-            var renderedHtml = marvin.templates.movies(movies);
-            $('.js-insert-movies').html(renderedHtml);
+        marvin.movies.search(searchQuery, function (response) {
+            var renderedHtml = marvin.templates.movies(response);
+            $('#search_results').html(renderedHtml);
         });
     });
 })(jQuery, marvin);
