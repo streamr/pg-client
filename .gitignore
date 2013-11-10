@@ -3,3 +3,7 @@
 
 # Libs
 node_modules
+www/components
+
+# built stuff
+dist
