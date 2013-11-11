@@ -17,11 +17,13 @@
             <h2>Movie name comes here</h2>
             <button class="btn btn-default" id="pick_streams"><i class="fa fa-bars"></i></button>
         </nav>
-        <div class="row">
+        <script>
+            var streamUrl = window.location.hash.substring(1);
+        </script>
+        <div class="row" id="playback_row">
             <div class="col-md-12" id="content">
-                <script>
-                    var streamUrl = window.location.hash.substring(1);
-                </script>
+                <div id="inner_viewport">
+                </div>
             </div>
         </div>
         <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">

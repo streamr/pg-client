@@ -21,7 +21,7 @@ function messageReceived(event) {
 
                 break;
 
-        }   
+        }
 
     }
 }
@@ -29,7 +29,11 @@ window.addEventListener("message", messageReceived);
 
 function showEntry(data) {
     var renderedHtml = marvin.templates.text_entry(data);
-    $('#content').append(renderedHtml);
+    var innerViewport = $('#content #inner_viewport');
+    innerViewport.append($(renderedHtml).css('width', $(window).width() + 'px'));
+
+    // Make sure viewport is showing latest entry
+    innerViewport.css('right', (innerViewport.find('> div').length - 1) * $(window).width() + 'px');
 }
 
 streamrInit();
@@ -51,7 +55,19 @@ marvin.streams.get(streamUrl, function(data) {
     startAt = new Date().getTime();
 
     $('#add_item_button').hammer().on('tap', function(event) {
-        entryPointInMs = new Date().getTime() - startAt; 
+        entryPointInMs = new Date().getTime() - startAt;
+    });
+
+    $('#playback_row #content').hammer().on('swiperight', function(event) {
+        var el = $(this).find('> div');
+        var currentRightPos = parseInt(el.css('right').replace('px', ''));
+        el.css('right', currentRightPos - $(window).width() + 'px');
+    });
+
+    $('#playback_row #content').hammer().on('swipeleft', function(event) {
+        var el = $(this).find('> div');
+        var currentRightPos = parseInt(el.css('right').replace('px', ''));
+        el.css('right', currentRightPos + $(window).width() + 'px');
     });
 
     setInterval(function() {
@@ -62,7 +78,7 @@ marvin.streams.get(streamUrl, function(data) {
         var minutes = Math.floor(diff_in_seconds / 60) + '';
 
         var seconds = diff_in_seconds - ( minutes * 60 ) + '';
-        
+
         if ( minutes.length == 1 ) {
             minutes = '0' + minutes;
         }
