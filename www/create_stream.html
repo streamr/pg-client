@@ -21,10 +21,10 @@
                 <form id="create_stream_form" role="form">
                     <div class="form-group">
                         <label for="name">1. Stream name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter stream name">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter stream name">
                     </div>
                     <script>
-                    document.write('<input type="hidden" name="movie_url" value="' + window.location.hash.substring(1) + '">');
+                        document.write('<input type="hidden" id="create_stream_url" name="create_stream_url" value="' + window.location.hash.substring(1) + '">');
                     </script>
                     <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-play-circle"></i> Start playback and add content!</button>
                 </form>
@@ -32,9 +32,7 @@
         </div>
     </div>
 
-    <!-- cordova.js is served from localhost to ensure the correct version -->
     <script src="components/steroids-js/steroids.js"></script>
-
     <script src="components/jquery/jquery.min.js"></script>
     <script src="components/hammerjs/dist/jquery.hammer.min.js"></script>
     <script src="javascripts/marvin.js"></script>

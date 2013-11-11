@@ -17,31 +17,27 @@
             <h2>Add Text Block</h2>
         </nav>
         <div class="row">
-            <div class="col-md-12" id="add_text_block_form">
-                <form role="form">
+            <div class="col-md-12">
+                <form role="form" id="add_text_block_form">
                     <div class="form-group">
                         <label for="title">1. Title</label>
-                        <input type="text" class="form-control" id="title" placeholder="Enter title">
+                        <input type="text" class="form-control" name="title" id="title" placeholder="Enter title">
                     </div>
                     <div class="form-group">
                         <label for="content">2. Content</label>
                         <textarea name="content" id="content" placeholder="Enter text here..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-plus"></i> Add Story</button>
+                    <button type="submit"  class="btn btn-lg btn-primary"><i class="fa fa-plus"></i> Add Story</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- cordova.js is served from localhost to ensure the correct version -->
-    <script src="http://localhost/appgyver/cordova.js"></script>
     <script src="components/steroids-js/steroids.js"></script>
-
     <script src="components/jquery/jquery.min.js"></script>
     <script src="components/hammerjs/dist/jquery.hammer.min.js"></script>
+    <script src="javascripts/marvin.js"></script>
     <script src="javascripts/streamr.js"></script>
+    <script src="javascripts/add_text_block.js"></script>
 </body>
 </html>
-
-
-

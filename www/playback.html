@@ -19,38 +19,26 @@
         </nav>
         <div class="row">
             <div class="col-md-12" id="content">
-                <span class="label label-primary">Stream label</span>
-                <h2>An item from the stream</h2>
-                <p>
-                    <img src="http://placehold.it/150x200" class="thumbnail">
-                    John Joseph "Jack" Nicholson (born April 22, 1937) is an American actor, film director, producer, and writer. Throughout his career, Jack Nicholson has portrayed unique and challenging roles, many of which include dark portrayals of neurotic and/or psychopathic characters. Nicholson's twelve Oscar nominations make him the most nominated male actor.
-                </p>
-<p>
-Nicholson has twice won the Academy Award for Best Actor, for <a href="#">One Flew Over the Cuckoo's Nest</a> and for As Good as It Gets. He also won the Academy Award for Best Supporting Actor for the 1983 film Terms of Endearment. He is tied with Walter Brennan and Daniel Day-Lewis for most Academy Award acting wins by a male actor, with three. Nicholson is well known for playing villainous roles, such as Frank Costello in The Departed, Jack Torrance in The Shining and the Joker in 1989's Batman.
-</p>
-<p>
-Nicholson was one of only two actors to be nominated for an Academy Award for acting in every decade from the 1960s to 2000s; the other was Michael Caine. He has won six Golden Globe Awards, and received the Kennedy Center Honor in 2001. In 1994, he became one of the youngest actors to be awarded the American Film Institute's Life Achievement Award. Notable films in which he has starred include Easy Rider, Five Easy Pieces, The Last Detail, Chinatown, The Passenger, The Shining, Reds, Wolf, A Few Good Men, The Pledge, About Schmidt, and The Departed.
-                </p>
-<p>
-Nicholson has twice won the Academy Award for Best Actor, for <a href="#">One Flew Over the Cuckoo's Nest</a> and for As Good as It Gets. He also won the Academy Award for Best Supporting Actor for the 1983 film Terms of Endearment. He is tied with Walter Brennan and Daniel Day-Lewis for most Academy Award acting wins by a male actor, with three. Nicholson is well known for playing villainous roles, such as Frank Costello in The Departed, Jack Torrance in The Shining and the Joker in 1989's Batman.
-</p>
-<p>
-Nicholson was one of only two actors to be nominated for an Academy Award for acting in every decade from the 1960s to 2000s; the other was Michael Caine. He has won six Golden Globe Awards, and received the Kennedy Center Honor in 2001. In 1994, he became one of the youngest actors to be awarded the American Film Institute's Life Achievement Award. Notable films in which he has starred include Easy Rider, Five Easy Pieces, The Last Detail, Chinatown, The Passenger, The Shining, Reds, Wolf, A Few Good Men, The Pledge, About Schmidt, and The Departed.
-                </p>
+                <script>
+                    var streamUrl = window.location.hash.substring(1);
+                </script>
             </div>
         </div>
         <nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
-            <button class="btn btn-default timeline"><i class="fa fa-clock-o"></i> 55:12</button>
+            <button class="btn btn-default timeline"><i class="fa fa-clock-o"></i> <span id="playback_time">00:00</span></button>
             <i id="play_pause_button" class="fa fa-play-circle"></i>
-            <button class="btn btn-default add_item" id="add_item_button"><i class="fa fa-plus"></i> Add Story</button>
+            <button class="btn btn-default add_item" data-tap-url="add_item.html" id="add_item_button"><i class="fa fa-plus"></i> Add Story</button>
         </nav>
     </div>
 
     <script src="components/steroids-js/steroids.js"></script>
-
     <script src="components/jquery/jquery.min.js"></script>
     <script src="components/hammerjs/dist/jquery.hammer.min.js"></script>
+    <script src="components/handlebars/handlebars.runtime.min.js"></script>
+    <script src="javascripts/marvin.js"></script>
+    <script src="javascripts/marvin_templates.js"></script>
     <script src="javascripts/streamr.js"></script>
+    <script src="javascripts/playback.js"></script>
 </body>
 </html>
 

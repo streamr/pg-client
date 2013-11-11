@@ -5,7 +5,6 @@ function messageReceived(event) {
         && event.data.message == "ready:movie_details.html" ) {
 
         window.postMessage(pendingPostMessage);
-
     }
 }
 
@@ -42,7 +41,7 @@ var pendingPostMessage;
                     'message': JSON.stringify({
                         'movie': search_results[el.attr('data-movie-url')]
                     })
-                }; 
+                };
 
             });
 

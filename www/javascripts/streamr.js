@@ -10,13 +10,9 @@ function streamr_init() {
         steroids.layers.pop();
     });
 
-    $('#add_item_button').hammer().on('tap', function(event) {
-        var webView = new steroids.views.WebView("add_item.html");
-        steroids.modal.show(webView);
-    });
-
     $('#start_playing_button').hammer().on('tap', function(event) {
         var webView = new steroids.views.WebView("playback.html");
         steroids.layers.push(webView);
     });
 }
+
