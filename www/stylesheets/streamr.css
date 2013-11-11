@@ -23,6 +23,11 @@
     margin-bottom:1em;
 }
 
+#search_results {
+    padding-left:0;
+    padding-right:0;
+}
+
 #search_results > div {
     overflow:hidden;
     padding:15px 15px;
@@ -150,7 +155,7 @@
     display:inline-block;
     margin-top:0;
     margin-left:15px;
-}   
+}
 
 #movie_details #add_new_stream_button {
     display:inline-block;
