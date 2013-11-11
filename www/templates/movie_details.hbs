@@ -1,0 +1,18 @@
+<nav class="navbar navbar-default navbar-top">
+    <button class="btn btn-default back" type="button"><i class="fa fa-angle-double-left"></i> Back</i></button>
+    <h2>{{ title }}</h2>
+</nav>
+<div class="row">
+    <div class="col-md-12" id="movie_details">
+        <h2>Streams</h2>
+        <button type="button" class="btn btn-primary" data-tap-url="create_stream.html#{{ href }}" id="add_new_stream_button"><i class="fa fa-plus"></i> Create new stream</button>
+        <div class="streams" id="stream_list">
+            <div>
+                <i class="fa fa-cog fa-spin loading"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+    <button type="button" class="btn btn-default" id="start_playing_button"><i class="fa fa-play-circle"></i> Start watching</button>
+</nav>

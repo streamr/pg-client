@@ -1,10 +1,10 @@
 {{#each movies}}
-<div>
+<div data-movie-url="{{ this.href }}">
     <div class="left">
         <img src="http://placehold.it/100x100" class="img-thumbnails" alt="Picture of the movie">
     </div>
     <div class="right">
-        <h3>{{{ this.title }}}</h3>
+        <h3>{{ this.title }}</h3>
         <p>A very short description of the movie here... Maybe movie duration and some other basic info as well?</p>
         <span class="label"><i class="fa fa-tags"></i> 12 streams available</span>
     </div>

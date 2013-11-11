@@ -139,16 +139,12 @@
     height:10em;
 }
 
-#add_text_block_form {
+form {
     font-size:1.3em;
 }
 
 #add_text_block_form .form-group {
     margin-bottom:2em;
-}
-
-#add_text_block_form [type="submit"] {
-    font-size:1.2em;
 }
 
 #movie_details h2 {
@@ -205,4 +201,14 @@
 #start_playing_button i {
     vertical-align:sub;
     font-size:1.8em;
+}
+
+#create_stream_form [type="submit"] i {
+    font-size:1.5em;
+    vertical-align:middle;
+}
+
+#create_stream_form input[type="text"] {
+    font-size:1.3em;
+    height:auto;
 }
