@@ -53,7 +53,6 @@ var marvin = (function ($) {
             });
         }
 
-
         function get(movieId, callback){
             $.ajax({
                 url: baseUrl + '/movies/' + movieId,
@@ -66,11 +65,83 @@ var marvin = (function ($) {
             });
         }
 
-
         return {
             'search': search,
             'create': create,
         };
+
+    })();
+
+    var entries = (function () {
+
+        function create(data, callback) {
+            console.log("create");
+            $.ajax({
+                url: baseUrl + '/entries',
+                type: 'POST',
+                data: data,
+                success: function (data) {
+                    if (callback !== undefined) {
+                        callback(data);
+                    }
+                },
+                error: function (data, textStatus) {
+                    errorHandler(textStatus);
+                }
+            });
+        }
+
+        function remove(url, callback) {
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                success: function (data) {
+                    if (callback !== undefined) {
+                        callback(data);
+                    }
+                },
+                error: function (data, textStatus) {
+                    errorHandler(textStatus);
+                }
+            });
+        }
+
+        function edit(url, data, callback) {
+            $.ajax({
+                url: url,
+                type: 'PUT',
+                data: data,
+                success: function (data) {
+                    if (callback !== undefined) {
+                        callback(data);
+                    }
+                },
+                error: function (data, textStatus) {
+                    errorHandler(textStatus);
+                }
+            });
+        }
+
+        function get(url, callback) {
+            $.ajax({
+                url: url,
+                success: function (data) {
+                    if (callback !== undefined) {
+                        callback(data);
+                    }
+                },
+                error: function (data, textStatus) {
+                    errorHandler(textStatus);
+                }
+            });
+        }
+
+        return {
+            'create': create,
+            'remove': remove,
+            'edit': edit,
+            'get': get
+        }
 
     })();
 
@@ -101,15 +172,31 @@ var marvin = (function ($) {
             });
         }
 
+        function entries(streamId, callback) {
+            $.ajax({
+                url: baseUrl + '/streams/' + streamId + '/entries',
+                success: function (data) {
+                    if (callback !== undefined) {
+                        callback(data);
+                    }
+                },
+                error: function (data, textStatus) {
+                    errorHandler(textStatus);
+                }
+            });
+        }
+
         return {
             'create': create,
             'get': get,
+            'entries': entries
         };
 
     })();
 
     return {
         'movies': movies,
+        'entries': entries,
         'streams': streams,
         'setMain': setSearchResults,
     };
