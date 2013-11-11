@@ -17,7 +17,7 @@
 
     $('form').on('submit', function(event) {
         event.preventDefault();
-        addTextBlock();
+        //addTextBlock();
     });
     $('form [type="submit"]').hammer().on('tap', addTextBlock);
 

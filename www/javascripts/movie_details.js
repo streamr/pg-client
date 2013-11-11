@@ -12,7 +12,7 @@ function messageReceived(event) {
         var renderedHtml = marvin.templates.movie_details(movie);
         $('#main_container').html(renderedHtml);
 
-        streamr_init();
+        streamrInit();
 
         // Update list of streams
         marvin.movies.get(movie.href, function(data) {

@@ -1,4 +1,4 @@
-function streamr_init() {
+function streamrInit() {
     var tap_event_attr_name = 'data-tap-url';
 
     $('[' + tap_event_attr_name + ']').hammer().on('tap', function(event) {

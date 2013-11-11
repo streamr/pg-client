@@ -54,14 +54,9 @@ var marvin = (function ($) {
 
     var entries = (function () {
 
-        function create(data, callback) {
-            data.stream_id = data.stream_url.substring(data.stream_url.lastIndexOf('/') + 1);
-            delete data.stream_url;
-
-            alert(JSON.stringify(data));
-
+        function create(url, data, callback) {
             $.ajax({
-                url: baseUrl + '/entries',
+                url: url,
                 type: 'POST',
                 data: data,
                 success: function (data) {

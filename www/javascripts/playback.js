@@ -9,13 +9,15 @@ function messageReceived(event) {
 
             case 'create_entry':
                 var entry_data = data.entry;
-                entry_data.stream_url = streamUrl;
                 entry_data.entry_point_in_ms = entryPointInMs;
 
-                marvin.entries.create(entry_data, function(data) {
-                    steroids.layers.pop();
-                    showEntry(entry_data);
-                });
+                marvin.entries.create(stream._links.createEntry,
+                    entry_data,
+                    function(data) {
+                        steroids.layers.pop();
+                        showEntry(entry_data);
+                    }
+                );
 
                 break;
 
@@ -30,11 +32,18 @@ function showEntry(data) {
     $('#content').append(renderedHtml);
 }
 
-streamr_init();
+streamrInit();
 
 // need some global reference
 var startAt;
 var entryPointInMs;
+
+// Currently working only with one stream
+// (need to fix this later for multiple streams)
+var stream;
+marvin.streams.get(streamUrl, function(data) {
+    stream = data.stream;
+});
 
 (function ($, marvin) {
     "use strict";
