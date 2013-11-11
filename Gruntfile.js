@@ -12,6 +12,15 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    compass: {
+      streamr: {
+        options: {
+          sassDir: 'www/stylesheets/sass',
+          cssDir: 'dist/stylesheets',
+        }
+      }
+    },
+
     handlebars: {
       marvin: {
         options: {
@@ -96,5 +105,9 @@ module.exports = function (grunt) {
   ]);
   grunt.registerTask('server', [
     'concurrent:server',
+  ]);
+  grunt.registerTask('build', [
+    'compass',
+    'handlebars',
   ]);
 };
