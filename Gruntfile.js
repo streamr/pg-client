@@ -38,7 +38,7 @@ module.exports = function (grunt) {
       },
       all: [
         'Gruntfile.js',
-        'src/assets/js/*.js',
+        'www/javascripts/*.js',
       ]
     },
 

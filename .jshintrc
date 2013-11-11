@@ -1,5 +1,6 @@
 {
     "bitwise": true,
+    "browser": true,
     "camelcase": true,
     "curly": true,
     "eqeqeq": true,
@@ -22,6 +23,7 @@
     "white": true,
     "globals": {
         "jQuery": false,
-        "marvin": false
+        "marvin": false,
+        "steroids": false
     }
 }
