@@ -33,29 +33,9 @@ var marvin = (function ($) {
             });
         }
 
-        /*
-        * Create a movie with the given data.
-        *
-        */
-        function create(data, callback){
+        function get(url, callback){
             $.ajax({
-                url: baseUrl + '/movies',
-                type: 'POST',
-                data: data,
-                success: function (data) {
-                    if (callback !== undefined) {
-                        callback(data);
-                    }
-                },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
-                }
-            });
-        }
-
-        function get(movieId, callback){
-            $.ajax({
-                url: baseUrl + '/movies/' + movieId,
+                url: url,
                 success: function (data) {
                     callback(data);
                 },
@@ -67,7 +47,7 @@ var marvin = (function ($) {
 
         return {
             'search': search,
-            'create': create,
+            'get': get
         };
 
     })();
@@ -160,9 +140,9 @@ var marvin = (function ($) {
             });
         }
 
-        function get(streamId, callback){
+        function get(url, callback){
             $.ajax({
-                url: baseUrl + '/streams/' + streamId,
+                url: url,
                 success: function (data) {
                     callback(data);
                 },
@@ -172,9 +152,9 @@ var marvin = (function ($) {
             });
         }
 
-        function entries(streamId, callback) {
+        function entries(url, callback) {
             $.ajax({
-                url: baseUrl + '/streams/' + streamId + '/entries',
+                url: url + '/entries',
                 success: function (data) {
                     if (callback !== undefined) {
                         callback(data);
