@@ -50,8 +50,8 @@ steroids.config.statusBar.style = "default"
 # -- Pre- and Post-Make hooks --
 # steroids.config.hooks.preMake.cmd = "echo"
 # steroids.config.hooks.preMake.args = ["running yeoman"]
-# steroids.config.hooks.postMake.cmd = "echo"
-# steroids.config.hooks.postMake.args = ["cleaning up files"]
+steroids.config.hooks.postMake.cmd = "grunt"
+steroids.config.hooks.postMake.args = ["handlebars"]
 
 # -- Default Editor --
 # steroids.config.editor.cmd = "subl"

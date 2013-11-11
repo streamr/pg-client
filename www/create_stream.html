@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Text Block</title>
+    <title>Create Stream</title>
     <meta charset="utf8">
     <meta name="viewport" content="width=device-width">
     <!-- Bootstrap -->
@@ -14,20 +14,19 @@
     <div class="container">
         <nav class="navbar navbar-default navbar-top">
             <button class="btn btn-default back" type="button"><i class="fa fa-angle-double-left"></i> Back</i></button>
-            <h2>Add Text Block</h2>
+            <h2>Create Stream</h2>
         </nav>
         <div class="row">
             <div class="col-md-12">
-                <form role="form" id="add_text_block_form">
+                <form id="create_stream_form" role="form">
                     <div class="form-group">
-                        <label for="title">1. Title</label>
-                        <input type="text" class="form-control" name="title" id="title" placeholder="Enter title">
+                        <label for="name">1. Stream name</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Enter stream name">
                     </div>
-                    <div class="form-group">
-                        <label for="content">2. Content</label>
-                        <textarea name="content" id="content" placeholder="Enter text here..."></textarea>
-                    </div>
-                    <button type="submit"  class="btn btn-lg btn-primary"><i class="fa fa-plus"></i> Add Story</button>
+                    <script>
+                        document.write('<input type="hidden" id="create_stream_url" name="create_stream_url" value="' + window.location.hash.substring(1) + '">');
+                    </script>
+                    <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-play-circle"></i> Start playback and add content!</button>
                 </form>
             </div>
         </div>
@@ -38,6 +37,9 @@
     <script src="components/hammerjs/dist/jquery.hammer.min.js"></script>
     <script src="javascripts/marvin.js"></script>
     <script src="javascripts/streamr.js"></script>
-    <script src="javascripts/add_text_block.js"></script>
+    <script src="javascripts/create_stream.js"></script>
 </body>
 </html>
+
+
+

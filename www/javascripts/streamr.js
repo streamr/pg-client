@@ -1,21 +1,18 @@
-$(document).ready(function($) {
+function streamrInit() {
+    var tap_event_attr_name = 'data-tap-url';
 
-    $('#search_results > div').hammer().on('tap', function(event) {
-        window.location='movie_details.html';
-        event.preventDefault();
-        return false;
+    $('[' + tap_event_attr_name + ']').hammer().on('tap', function(event) {
+        var webView = new steroids.views.WebView($(this).attr(tap_event_attr_name));
+        steroids.layers.push(webView);
     });
 
     $('button.back').hammer().on('tap', function(event) {
-        window.history.back();
-        event.preventDefault();
-        return false;
+        steroids.layers.pop();
     });
 
-    $('#add_item_button').hammer().on('tap', function(event) {
-        var webView = new steroids.views.WebView("add_item.html");
-        //webView.preload();
-        steroids.modal.show(webView);
-    }); 
+    $('#start_playing_button').hammer().on('tap', function(event) {
+        var webView = new steroids.views.WebView("playback.html");
+        steroids.layers.push(webView);
+    });
+}
 
-});

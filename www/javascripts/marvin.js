@@ -54,10 +54,9 @@ var marvin = (function ($) {
 
     var entries = (function () {
 
-        function create(data, callback) {
-            console.log("create");
+        function create(url, data, callback) {
             $.ajax({
-                url: baseUrl + '/entries',
+                url: url,
                 type: 'POST',
                 data: data,
                 success: function (data) {
@@ -127,9 +126,10 @@ var marvin = (function ($) {
 
     var streams = (function () {
 
-        function create(data, callback){
+        function create(url, data, callback){
             $.ajax({
-                url: baseUrl + '/streams',
+                url: url,
+                data: data,
                 type: 'POST',
                 success: function (data) {
                     callback(data);
