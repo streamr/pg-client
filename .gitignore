@@ -1,5 +1,6 @@
 # Temp files
 *.swp
+.sass-cache/*
 
 # Libs
 node_modules
