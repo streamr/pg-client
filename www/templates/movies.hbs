@@ -1,16 +1,22 @@
 {{#each movies}}
-<div data-movie-url="{{ this.href }}">
-    <div class="left img"
-        {{#if this.cover_img }}
-            style="background-image:url({{ this.cover_img }})">
-        {{else}}
-            style="background-image:url(http://placehold.it/100x100)">
-        {{/if}}
+<div data-movie-url="{{ this.href }}" class="search-result-movie">
+    {{#if this.cover_img }}
+        <div class="pull-left movie-cover-art col-xs-2">
+            <img src="{{ this.cover_img }}">
+        </div>
+        <div class="movie-title col-xs-8">
+    {{else}}
+        <div class="movie-title col-xs-10">
+    {{/if}}
+        <span>
+            {{ this.title }}
+        </span>
     </div>
-    <div class="right">
-        <h3>{{ this.title }}</h3>
-        <p>A very short description of the movie here... Maybe movie duration and some other basic info as well?</p>
-        <span class="label"><i class="fa fa-tags"></i> 12 streams available</span>
+
+    <div class="pull-right col-xs-2 movie-stream-count">
+        <span>
+            15
+        </span>
     </div>
 </div>
 {{/each}}
