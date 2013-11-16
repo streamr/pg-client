@@ -1,7 +1,11 @@
 {{#each movies}}
 <div data-movie-url="{{ this.href }}">
-    <div class="left">
-        <img src="http://placehold.it/100x100" class="img-thumbnails" alt="Picture of the movie">
+    <div class="left img"
+        {{#if this.cover_img }}
+            style="background-image:url({{ this.cover_img }})">
+        {{else}}
+            style="background-image:url(http://placehold.it/100x100)">
+        {{/if}}
     </div>
     <div class="right">
         <h3>{{ this.title }}</h3>

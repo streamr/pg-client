@@ -33,6 +33,12 @@
     padding:15px 15px;
 }
 
+#search_results > div .img {
+    width:100px;
+    height:100px;
+    background-size:contain;
+}
+
 #search_results > div:nth-child(2n) {
     /*
     Was used for the light theme
