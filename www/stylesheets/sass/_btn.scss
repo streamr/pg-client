@@ -1,0 +1,49 @@
+$background-color1: #551A8B;
+$background-color2: #694489;
+
+.btn-default {
+  color: #333333;
+  background-image:-webkit-gradient(linear,left 0,left 100%,from($background-color1),to($background-color2));
+  background-color: $background-color1;
+  border-color: #cccccc;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+  color: #ffffff;
+  background-image:-webkit-gradient(linear,left 0,left 100%,from($background-color1),to($background-color1));
+  border-color: #285e8e;
+}
+
+.btn-primary {
+  color: #ffffff;
+  background-image: none;
+  background-image:-webkit-gradient(linear,left 0,left 100%,from($background-color1),to($background-color2));
+  border-color: #357ebd;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: #ffffff;
+  background-image:-webkit-gradient(linear,left 0,left 100%,from($background-color1),to($background-color1));
+  border-color: #285e8e;
+}
+
+.btn-lg {
+  color: #ffffff;
+  background-image:-webkit-gradient(linear,left 0,left 100%,from($background-color1),to($background-color2));
+  background-color: $background-color1;
+  height: 56px;
+}
+
+.btn-lg:focus{
+  color: #ffffff;
+  background-image:-webkit-gradient(linear,left 0,left 100%,from($background-color1),to($background-color1));
+  height: 56px;
+}
