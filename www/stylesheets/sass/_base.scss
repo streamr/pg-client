@@ -1,3 +1,6 @@
+$purple: #463265;
+$button-color: #333;
+
 #content a {
     text-decoration:underline;
 }
@@ -5,13 +8,6 @@
 #content .thumbnail {
     float:right;
     margin:0 0 10px 12px;
-}
-
-#content .label {
-    background:#463265;
-    display:inline-block;
-    padding:0.4em 1em;
-    font-size:0.9em;
 }
 
 .fa {
@@ -28,43 +24,52 @@
     padding-right:0;
 }
 
-#search_results > div {
-    overflow:hidden;
-    padding:15px 15px;
-}
+.search-result-movie {
+    $radiusSize: 6px;
 
-#search_results > div .img {
-    width:100px;
-    height:100px;
-    background-size:contain;
-}
+    height: 100px;
+    margin: 10px 10px;
+    font-size: 20px;
 
-#search_results > div:nth-child(2n) {
-    /*
-    Was used for the light theme
-    background:#F0F0F0;
-    */
-    background:#484848;
-}
+    background-color: $button-color;
+    background-image: linear-gradient(to bottom, lighten($button-color, 4%), $button-color);
+    border: 1px solid $button-color;
+    border-radius: $radiusSize;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 1px 1px rgba(0, 0, 0, 0.2);
+    color: #eee;
+    padding: 1px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4);
 
-#search_results .label {
-    background:#463265;
-    margin-top:5px;
-}
+    .movie-title {
+        display: table;
+        height: 100%;
 
-#search_results .left {
-    float:left;
-    margin-right:1em;
-    max-width:30%;
-}
+        span {
+            vertical-align: middle;
+            display: table-cell;
+        }
+    }
 
-#search_results .right {
-    float:left;
-    max-width:65%;
-}
 
-#search_results h3 {
-    margin-top:0;
+    .movie-cover-art {
+        padding: 0;
+        height: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        border-radius: $radiusSize 0 0 $radiusSize;
+    }
+
+    .movie-stream-count {
+        border-radius: 0 $radiusSize $radiusSize 0;
+        font-size: 65px;
+        line-height: 100px;
+        color: #fff;
+        background-color: $purple;
+        text-align: center;
+        height: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .navbar-top {
