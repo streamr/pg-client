@@ -2,7 +2,7 @@
 var marvin = (function ($) {
     "use strict";
 
-    var baseUrl = 'http://marvin.thusoy.com';
+    var baseUrl = 'https://marvin.thusoy.com';
 
     function errorHandler(errorText) {
         alert(errorText);
