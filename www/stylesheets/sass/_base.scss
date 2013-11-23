@@ -25,6 +25,8 @@ $button-color: #333;
 }
 
 .search-result-movie {
+    $radiusSize: 6px;
+
     height: 100px;
     margin: 10px 10px;
     font-size: 20px;
@@ -32,7 +34,7 @@ $button-color: #333;
     background-color: $button-color;
     background-image: linear-gradient(to bottom, lighten($button-color, 4%), $button-color);
     border: 1px solid $button-color;
-    border-radius: 6px;
+    border-radius: $radiusSize;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 1px 1px rgba(0, 0, 0, 0.2);
     color: #eee;
     padding: 1px;
@@ -51,15 +53,14 @@ $button-color: #333;
 
     .movie-cover-art {
         padding: 0;
-
-        img {
-            height: 97px;
-            padding: 1px;
-        }
+        height: 100%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        border-radius: $radiusSize 0 0 $radiusSize;
     }
 
     .movie-stream-count {
-        border-radius: 0 6px 6px 0;
+        border-radius: 0 $radiusSize $radiusSize 0;
         font-size: 65px;
         line-height: 100px;
         color: #fff;
