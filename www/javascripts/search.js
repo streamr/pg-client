@@ -1,17 +1,3 @@
-function messageReceived(event) {
-
-    // check that the message is intended for us
-    if ( event.data.recipient == "index.html"
-        && event.data.message == "ready:movie_details.html" ) {
-
-        window.postMessage(pendingPostMessage);
-    }
-}
-
-window.addEventListener("message", messageReceived);
-
-var pendingPostMessage;
-
 (function ($, marvin) {
     "use strict";
 
@@ -37,17 +23,12 @@ var pendingPostMessage;
             $('#search_results > div').hammer().on('tap', function(e) {
                 var el = $(this);
 
+                localStorage.setItem("movieDetailsMovie", JSON.stringify({
+                    'movie': search_results[el.attr('data-movie-url')]
+                }));
+
                 var webView = new steroids.views.WebView("movie_details.html");
                 steroids.layers.push(webView);
-
-                // We need to send some data to the movie_details.html webview
-                pendingPostMessage = {
-                    'recipient': 'movie_details.html',
-                    'message': JSON.stringify({
-                        'movie': search_results[el.attr('data-movie-url')]
-                    })
-                };
-
             });
 
         });

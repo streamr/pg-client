@@ -1,31 +1,24 @@
-function messageReceived(event) {
+// Need to poll for changes in localStorage..
+// TODO: is there a better solution to this?
+// Previously we used window.postMessage, but this
+// caused problems for testing in web browser
+var timerForNewEntries;
+function checkForNewEntriesToAdd() {
+    if ( localStorage.getItem('newItemToAdd') != null ) {
+        var data = JSON.parse(localStorage.getItem('newItemToAdd'));
+        localStorage.setItem('newItemToAdd', null);
 
-    // check that the message is intended for us
-    if ( event.data.recipient == "playback.html" ) {
+        data.entry_point_in_ms = entryPointInMs;
 
-        var data = JSON.parse(event.data.message);
-
-        switch ( data.type ) {
-
-            case 'create_entry':
-                var entry_data = data.entry;
-                entry_data.entry_point_in_ms = entryPointInMs;
-
-                marvin.entries.create(stream._links.createEntry,
-                    entry_data,
-                    function(data) {
-                        steroids.layers.pop();
-                        showEntry(entry_data);
-                    }
-                );
-
-                break;
-
-        }
-
+        marvin.entries.create(stream._links.createEntry,
+            data,
+            function(reply) {
+                //steroids.layers.pop();
+                showEntry(data);
+            }
+        );
     }
 }
-window.addEventListener("message", messageReceived);
 
 function showEntry(data) {
     var renderedHtml = marvin.templates.text_entry(data);
@@ -56,6 +49,9 @@ marvin.streams.get(streamUrl, function(data) {
 
     $('#add_item_button').hammer().on('tap', function(event) {
         entryPointInMs = new Date().getTime() - startAt;
+
+        // Start listening for added content
+        timerForNewEntries = window.setInterval(checkForNewEntriesToAdd, 100);
     });
 
     $('#playback_row #content').hammer().on('swiperight', function(event) {
