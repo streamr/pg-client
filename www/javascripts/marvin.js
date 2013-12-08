@@ -4,8 +4,8 @@ var marvin = (function ($) {
 
     var baseUrl = 'https://marvin.thusoy.com';
 
-    function errorHandler(errorText) {
-        alert(errorText);
+    function errorHandler(errorText, errorThrown) {
+        alert(errorText + ". " + errorThrown);
     }
 
     function setSearchResults(data){
@@ -27,8 +27,8 @@ var marvin = (function ($) {
                 success: function (data) {
                     callback(data);
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -39,8 +39,8 @@ var marvin = (function ($) {
                 success: function (data) {
                     callback(data);
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -64,8 +64,8 @@ var marvin = (function ($) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -79,8 +79,8 @@ var marvin = (function ($) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -95,8 +95,8 @@ var marvin = (function ($) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -109,8 +109,8 @@ var marvin = (function ($) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -134,8 +134,8 @@ var marvin = (function ($) {
                 success: function (data) {
                     callback(data);
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -146,8 +146,8 @@ var marvin = (function ($) {
                 success: function (data) {
                     callback(data);
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -160,8 +160,8 @@ var marvin = (function ($) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
