@@ -20,13 +20,26 @@ function checkForNewEntriesToAdd() {
     }
 }
 
+// Cache selectors
+var innerViewport = $('#content #inner_viewport');
+
+// Make sure elements in innerViewport fills whole screen vertically
+innerViewport.css({
+    'height': $(window).height() - ( $('#top_toolbar').outerHeight(true) +
+                $('#bottom_toolbar').outerHeight(true) ) + 'px'
+});
+
 function showEntry(data) {
     var renderedHtml = marvin.templates.text_entry(data);
-    var innerViewport = $('#content #inner_viewport');
     innerViewport.append($(renderedHtml).css('width', $(window).width() + 'px'));
 
-    // Make sure viewport is showing latest entry
-    innerViewport.css('right', (innerViewport.find('> div').length - 1) * $(window).width() + 'px');
+    innerViewport.css({
+        // Make sure viewport is showing latest entry
+        'right': (innerViewport.find('> div').length - 1) * $(window).width() + 'px',
+
+        // And fills whole screen vertically
+        'height': ''
+    });
 }
 
 streamrInit();
@@ -35,6 +48,7 @@ streamrInit();
 var startAt;
 var entryPointInMs;
 
+// TODO
 // Currently working only with one stream
 // (need to fix this later for multiple streams)
 var stream;
@@ -54,13 +68,13 @@ marvin.streams.get(streamUrl, function(data) {
         timerForNewEntries = window.setInterval(checkForNewEntriesToAdd, 100);
     });
 
-    $('#playback_row #content').hammer().on('swiperight', function(event) {
+    innerViewport.hammer().on('swiperight', function(event) {
         var el = $(this).find('> div');
         var currentRightPos = parseInt(el.css('right').replace('px', ''));
         el.css('right', currentRightPos - $(window).width() + 'px');
     });
 
-    $('#playback_row #content').hammer().on('swipeleft', function(event) {
+    innerViewport.hammer().on('swipeleft', function(event) {
         var el = $(this).find('> div');
         var currentRightPos = parseInt(el.css('right').replace('px', ''));
         el.css('right', currentRightPos + $(window).width() + 'px');

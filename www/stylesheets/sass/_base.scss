@@ -97,10 +97,6 @@ $button-color: #333;
     font-size:1.2em;
 }
 
-#content {
-    padding-bottom:5em;
-}
-
 #content h2 {
     margin-top:0.2em;
 }
@@ -232,20 +228,14 @@ form {
     float:left;
 }
 
-#playback_row {
-    height:100%;
-}
-
 #playback_row #content {
     width:100%;
-    height:100%;
     overflow:hidden;
 }
 
 #playback_row #content #inner_viewport {
     width:99999%;
     overflow:hidden;
-    height:100%;
     position:relative;
     -webkit-transition:all 0.5s;
     transition:all 0.5s;
