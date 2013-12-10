@@ -1,39 +1,43 @@
-function messageReceived(event) {
+// Need to poll for changes in localStorage..
+// TODO: is there a better solution to this?
+// Previously we used window.postMessage, but this
+// caused problems for testing in web browser
+var timerForNewEntries;
+function checkForNewEntriesToAdd() {
+    if ( localStorage.getItem('newItemToAdd') != null ) {
+        var data = JSON.parse(localStorage.getItem('newItemToAdd'));
 
-    // check that the message is intended for us
-    if ( event.data.recipient == "playback.html" ) {
+        localStorage.removeItem('newItemToAdd');
 
-        var data = JSON.parse(event.data.message);
+        data.entry_point_in_ms = entryPointInMs;
 
-        switch ( data.type ) {
-
-            case 'create_entry':
-                var entry_data = data.entry;
-                entry_data.entry_point_in_ms = entryPointInMs;
-
-                marvin.entries.create(stream._links.createEntry,
-                    entry_data,
-                    function(data) {
-                        steroids.layers.pop();
-                        showEntry(entry_data);
-                    }
-                );
-
-                break;
-
-        }
-
+        marvin.entries.create(stream._links.createEntry,
+            data,
+            function(reply) {
+                //steroids.layers.pop();
+                showEntry(data);
+            }
+        );
     }
 }
-window.addEventListener("message", messageReceived);
+
+// Cache selectors
+var innerViewport = $('#content #inner_viewport');
+
+// Make sure elements in innerViewport fills whole screen vertically
+innerViewport.css({
+    'height': $(window).height() - ( $('#top_toolbar').outerHeight(true) +
+                $('#bottom_toolbar').outerHeight(true) ) + 'px'
+});
 
 function showEntry(data) {
     var renderedHtml = marvin.templates.text_entry(data);
-    var innerViewport = $('#content #inner_viewport');
     innerViewport.append($(renderedHtml).css('width', $(window).width() + 'px'));
 
-    // Make sure viewport is showing latest entry
-    innerViewport.css('right', (innerViewport.find('> div').length - 1) * $(window).width() + 'px');
+    innerViewport.css({
+        // Make sure viewport is showing latest entry
+        'right': (innerViewport.find('> div').length - 1) * $(window).width() + 'px'
+    });
 }
 
 streamrInit();
@@ -42,6 +46,7 @@ streamrInit();
 var startAt;
 var entryPointInMs;
 
+// TODO
 // Currently working only with one stream
 // (need to fix this later for multiple streams)
 var stream;
@@ -56,15 +61,18 @@ marvin.streams.get(streamUrl, function(data) {
 
     $('#add_item_button').hammer().on('tap', function(event) {
         entryPointInMs = new Date().getTime() - startAt;
+
+        // Start listening for added content
+        timerForNewEntries = window.setInterval(checkForNewEntriesToAdd, 100);
     });
 
-    $('#playback_row #content').hammer().on('swiperight', function(event) {
+    innerViewport.hammer().on('swiperight', function(event) {
         var el = $(this).find('> div');
         var currentRightPos = parseInt(el.css('right').replace('px', ''));
         el.css('right', currentRightPos - $(window).width() + 'px');
     });
 
-    $('#playback_row #content').hammer().on('swipeleft', function(event) {
+    innerViewport.hammer().on('swipeleft', function(event) {
         var el = $(this).find('> div');
         var currentRightPos = parseInt(el.css('right').replace('px', ''));
         el.css('right', currentRightPos + $(window).width() + 'px');

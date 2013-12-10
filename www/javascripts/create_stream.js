@@ -1,6 +1,8 @@
 (function ($, marvin) {
     "use strict";
 
+    streamrInit();
+
     function create_stream() {
         var form = $('#create_stream_form');
 

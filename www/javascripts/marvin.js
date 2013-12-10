@@ -4,8 +4,8 @@ var marvin = (function ($) {
 
     var baseUrl = 'https://marvin.thusoy.com';
 
-    function errorHandler(errorText) {
-        alert(errorText);
+    function errorHandler(errorText, errorThrown) {
+        alert(errorText + ". " + errorThrown);
     }
 
     function setSearchResults(data){
@@ -27,8 +27,8 @@ var marvin = (function ($) {
                 success: function (data) {
                     callback(data);
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -39,8 +39,8 @@ var marvin = (function ($) {
                 success: function (data) {
                     callback(data);
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -59,13 +59,16 @@ var marvin = (function ($) {
                 url: url,
                 type: 'POST',
                 data: data,
+                headers: {
+                    'Authorization': 'Token ' + getAuthToken()
+                },
                 success: function (data) {
                     if (callback !== undefined) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -74,13 +77,16 @@ var marvin = (function ($) {
             $.ajax({
                 url: url,
                 type: 'DELETE',
+                headers: {
+                    'Authorization': 'Token ' + getAuthToken()
+                },
                 success: function (data) {
                     if (callback !== undefined) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -90,13 +96,16 @@ var marvin = (function ($) {
                 url: url,
                 type: 'PUT',
                 data: data,
+                headers: {
+                    'Authorization': 'Token ' + getAuthToken()
+                },
                 success: function (data) {
                     if (callback !== undefined) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -109,8 +118,8 @@ var marvin = (function ($) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -131,11 +140,14 @@ var marvin = (function ($) {
                 url: url,
                 data: data,
                 type: 'POST',
+                headers: {
+                    'Authorization': 'Token ' + getAuthToken()
+                },
                 success: function (data) {
                     callback(data);
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -146,8 +158,8 @@ var marvin = (function ($) {
                 success: function (data) {
                     callback(data);
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -160,8 +172,8 @@ var marvin = (function ($) {
                         callback(data);
                     }
                 },
-                error: function (data, textStatus) {
-                    errorHandler(textStatus);
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
             });
         }
@@ -174,10 +186,63 @@ var marvin = (function ($) {
 
     })();
 
+    var users = (function () {
+
+        function create(data, callback){
+            $.ajax({
+                url: baseUrl + '/users',
+                data: data,
+                type: 'POST',
+                success: function (data) {
+                    if (callback !== undefined) {
+                        callback(data);
+                    }
+                },
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
+                }
+            });
+        }
+
+        function login(data, callback){
+            $.ajax({
+                url: baseUrl + '/login',
+                data: data,
+                type: 'POST',
+                success: function (data) {
+                    callback(data);
+                },
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
+                }
+            });
+        }
+
+        function get(userId, callback){
+            $.ajax({
+                url: baseUrl + '/users/' + userId,
+                success: function (data) {
+                    callback(data);
+                },
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
+                }
+            });
+        }
+
+        return {
+            'create': create,
+            'login': login,
+            'get': get,
+        };
+
+    })();
+
     return {
         'movies': movies,
         'entries': entries,
         'streams': streams,
         'setMain': setSearchResults,
+        'users': users
     };
 })(jQuery);
