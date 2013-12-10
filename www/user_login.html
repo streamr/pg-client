@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <meta charset="utf8">
+    <meta name="viewport" content="width=device-width">
+    <!-- Bootstrap -->
+    <link href="stylesheets/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/bootstrap-slate-theme.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/font-awesome.min.css" rel="stylesheet" media="screen">
+    <link href="stylesheets/streamr.css" rel="stylesheet" media="screen">
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default navbar-top">
+            <button class="btn btn-default back" type="button"><i class="fa fa-angle-double-left"></i> Back</i></button>
+            <h2>Login</h2>
+        </nav>
+        <div class="row">
+            <div class="col-md-12" id="content">
+                <form id="login_form" role="form">
+                    <div class="form-group">
+                        <label for="name">Username / E-mail</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                    </div>
+                    <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-lock"></i> Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="components/steroids-js/steroids.js"></script>
+    <script src="components/jquery/jquery.min.js"></script>
+    <script src="components/hammerjs/dist/jquery.hammer.min.js"></script>
+    <script src="components/handlebars/handlebars.runtime.min.js"></script>
+    <script src="javascripts/marvin.js"></script>
+    <script src="javascripts/streamr.js"></script>
+    <script src="javascripts/user_login.js"></script>
+</body>
+</html>
+
+
+

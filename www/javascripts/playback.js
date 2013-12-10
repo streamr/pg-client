@@ -6,7 +6,8 @@ var timerForNewEntries;
 function checkForNewEntriesToAdd() {
     if ( localStorage.getItem('newItemToAdd') != null ) {
         var data = JSON.parse(localStorage.getItem('newItemToAdd'));
-        localStorage.setItem('newItemToAdd', null);
+
+        localStorage.removeItem('newItemToAdd');
 
         data.entry_point_in_ms = entryPointInMs;
 
@@ -35,10 +36,7 @@ function showEntry(data) {
 
     innerViewport.css({
         // Make sure viewport is showing latest entry
-        'right': (innerViewport.find('> div').length - 1) * $(window).width() + 'px',
-
-        // And fills whole screen vertically
-        'height': ''
+        'right': (innerViewport.find('> div').length - 1) * $(window).width() + 'px'
     });
 }
 
