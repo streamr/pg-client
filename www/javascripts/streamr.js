@@ -27,11 +27,6 @@ function streamrInit() {
     $('button.back').hammer().on('tap', function(event) {
         steroids.layers.pop();
     });
-
-    $('#start_playing_button').hammer().on('tap', function(event) {
-        var webView = new steroids.views.WebView("playback.html");
-        steroids.layers.push(webView);
-    });
 }
 
 function requireLogin(message, returnToUrl) {
