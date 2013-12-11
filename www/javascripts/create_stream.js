@@ -1,21 +1,22 @@
 (function ($, marvin) {
     "use strict";
 
+    var movie = JSON.parse(localStorage.getItem("movieDetailsMovie")).movie;
+
     streamrInit();
 
     function create_stream() {
         var form = $('#create_stream_form');
 
-        var createStreamUrl = form.find('#create_stream_url').val();
-
-        marvin.streams.create(createStreamUrl, {
+        marvin.streams.create(movie._links.createStream, {
             'name': form.find('[name="name"]').val()
         }, function(data) {
 
-            // Show playback view
-            var webView = new steroids.views.WebView("playback.html#" + data.stream.href);
-            steroids.layers.push(webView);
+            localStorage.setItem("playBackNewStream", JSON.stringify(data.stream));
 
+            // Show playback view
+            var webView = new steroids.views.WebView("playback.html");
+            steroids.layers.push(webView);
         });
     }
 
