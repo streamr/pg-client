@@ -61,4 +61,8 @@
 
     $(window).resize(scaleStreamCount);
 
+    $(document).ready(function () {
+        searchMovies();
+    });
+
 })(jQuery, marvin);
