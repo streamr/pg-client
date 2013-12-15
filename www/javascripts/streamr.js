@@ -1,3 +1,7 @@
+// How long elements should have class "active"
+// when tap event is fired (milliseconds)
+var touchFeedbackDelay = 100;
+
 function streamrInit() {
     var tap_event_attr_name = 'data-tap-url';
 

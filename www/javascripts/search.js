@@ -23,6 +23,12 @@
             $('#search_results > div').hammer().on('tap', function(e) {
                 var el = $(this);
 
+                // Give touch feedback
+                el.addClass('active');
+                window.setTimeout(function() {
+                    el.removeClass('active');
+                }, touchFeedbackDelay);
+
                 localStorage.setItem("movieDetailsMovie", JSON.stringify({
                     'movie': search_results[el.attr('data-movie-url')]
                 }));

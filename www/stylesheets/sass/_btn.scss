@@ -2,7 +2,7 @@ $background-color1: #551A8B;
 $background-color2: #694489;
 
 .btn-default {
-  color: #333333;
+  color: white;
   background-image:-webkit-gradient(linear,left 0,left 100%,from($background-color1),to($background-color2));
   background-color: $background-color1;
   border-color: #cccccc;

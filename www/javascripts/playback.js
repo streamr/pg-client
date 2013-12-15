@@ -1,6 +1,7 @@
 // Get the movie from localStorage
-var movieInfo = JSON.parse(localStorage.getItem('playBackMovie'));
-var renderedHtml = marvin.templates.playback(movieInfo.movie);
+var movie = JSON.parse(localStorage.getItem("movieDetailsMovie")).movie;
+var selectedStreams = JSON.parse(localStorage.getItem('selectedStreams'));
+var renderedHtml = marvin.templates.playback(movie);
 $('#container').html(renderedHtml);
 
 // If we are creating a new stream
@@ -23,7 +24,17 @@ function checkForNewEntriesToAdd() {
 
         localStorage.removeItem('newItemToAdd');
 
+        // Check if we need to close popups that were opened when creating new entry
+        if ( data.popups_to_close ) {
+            for ( ; data.popups_to_close > 0; data.popups_to_close -- ) {
+                steroids.layers.pop();
+            }
+            delete data.popups_to_close;
+        }
+
         data.entry_point_in_ms = entryPointInMs;
+
+        data.content = JSON.stringify(data.content);
 
         marvin.entries.create(newStream._links.createEntry,
             data,
@@ -39,7 +50,8 @@ function checkForNewEntriesToAdd() {
 }
 
 // need some global references
-var startAt;
+var pauseAt = null;
+var startAt = new Date().getTime();
 var entryPointInMs;
 
 // Cache some selectors
@@ -65,7 +77,7 @@ function addEntriesToSortedEntries(streamIndex, entries) {
             'streamIndex': streamIndex,
             'entry': entries[i]
         });
-        
+
     }
 
     // Make sure to insert all entries from sortedEntries
@@ -76,16 +88,18 @@ function addEntriesToSortedEntries(streamIndex, entries) {
     sortedEntries = sorted;
 }
 
-for( var i = 0; i < movieInfo.selectedStreams.length; i ++ ) {
-    
-    var tmp = movieInfo.selectedStreams[i];
+if ( newStream == null ) {
+    for( var i = 0; i < selectedStreams.length; i ++ ) {
 
-    (function (tmp, i) {
-        marvin.entries.get(tmp._links.entries, function(data) {
-            addEntriesToSortedEntries(i, data.entries);
-         });
+        var tmp = selectedStreams[i];
 
-    })(tmp, i);
+        (function (tmp, i) {
+            marvin.entries.get(tmp._links.entries, function(data) {
+                addEntriesToSortedEntries(i, data.entries);
+             });
+
+        })(tmp, i);
+    }
 }
 
 function getCurrentPlaybackPosition() {
@@ -94,14 +108,20 @@ function getCurrentPlaybackPosition() {
 
 // Show stream entries
 function checkForStreamEntriesToShow() {
+
+    // If video is paused => do nothing
+    if ( pauseAt != null ) {
+        return;
+    }
+
     var playbackPosition = getCurrentPlaybackPosition();
 
     for ( var i = 0; i < sortedEntries.length; i ++ ) {
-        
+
         if ( sortedEntries[i].entry.entry_point_in_ms <= playbackPosition ) {
             var entry = sortedEntries.shift();
             showEntry({
-                'streamName': movieInfo.selectedStreams[entry.streamIndex].name,
+                'streamName': selectedStreams[entry.streamIndex].name,
                 'entry': entry.entry
             });
         }
@@ -120,8 +140,27 @@ innerViewport.css({
 });
 
 function showEntry(data) {
-    var renderedHtml = marvin.templates.text_entry(data);
-    innerViewport.append($(renderedHtml).css('width', $(window).width() + 'px'));
+
+    if ( typeof data.entry.content != "object" ) {
+        data.entry.content = JSON.parse(data.entry.content);
+    }
+
+    switch ( data.entry.content_type ) {
+        case 'text':
+        default:
+            var renderedHtml = marvin.templates.text_entry(data);
+            break;
+
+        case 'wikipedia':
+            var renderedHtml = marvin.templates.wikipedia_entry(data);
+            break;
+
+    }
+    
+    innerViewport.append($(renderedHtml).css({
+        'width': $(window).width() - 30 + 'px', // -30 px because of padding of parent element
+        'height': innerViewport.css('height')
+    }));
 
     innerViewport.css({
         // Make sure viewport is showing latest entry
@@ -129,52 +168,72 @@ function showEntry(data) {
     });
 }
 
-(function ($, marvin) {
-    "use strict";
 
-    startAt = new Date().getTime();
+$('#add_item_button').hammer().on('tap', function(event) {
+    entryPointInMs = new Date().getTime() - startAt;
 
-    $('#add_item_button').hammer().on('tap', function(event) {
-        entryPointInMs = new Date().getTime() - startAt;
+    // Start listening for added content
+    timerForNewEntries = window.setInterval(checkForNewEntriesToAdd, 200);
+});
 
-        // Start listening for added content
-        timerForNewEntries = window.setInterval(checkForNewEntriesToAdd, 200);
-    });
+innerViewport.parent().hammer({
+    'swipe_velocity': 0.2
+}).on('swiperight', function(event) {
+    var el = $(this).find('> div');
+    var currentRightPos = parseInt(el.css('right').replace('px', ''));
+    el.css('right', currentRightPos - $(window).width() + 'px');
+});
 
-    innerViewport.parent().hammer({
-        'swipe_velocity': 0.2
-    }).on('swiperight', function(event) {
-        var el = $(this).find('> div');
-        var currentRightPos = parseInt(el.css('right').replace('px', ''));
-        el.css('right', currentRightPos - $(window).width() + 'px');
-    });
+innerViewport.parent().hammer({
+    'swipe_velocity': 0.2
+}).on('swipeleft', function(event) {
+    var el = $(this).find('> div');
+    var currentRightPos = parseInt(el.css('right').replace('px', ''));
+    el.css('right', currentRightPos + $(window).width() + 'px');
+});
 
-    innerViewport.parent().hammer({
-        'swipe_velocity': 0.2
-    }).on('swipeleft', function(event) {
-        var el = $(this).find('> div');
-        var currentRightPos = parseInt(el.css('right').replace('px', ''));
-        el.css('right', currentRightPos + $(window).width() + 'px');
-    });
 
-    setInterval(function() {
-        var diff = new Date().getTime() - startAt;
+// Playback timer
+setInterval(function() {
 
-        var diff_in_seconds = Math.round(diff / 1000);
+    // If video is paused => do nothing
+    if ( pauseAt != null ) {
+        return;
+    }
 
-        var minutes = Math.floor(diff_in_seconds / 60) + '';
+    var diff = new Date().getTime() - startAt;
 
-        var seconds = diff_in_seconds - ( minutes * 60 ) + '';
+    var diff_in_seconds = Math.round(diff / 1000);
 
-        if ( minutes.length == 1 ) {
-            minutes = '0' + minutes;
-        }
-        if ( seconds.length == 1 ) {
-            seconds = '0' + seconds;
-        }
+    var minutes = Math.floor(diff_in_seconds / 60) + '';
 
-        $('#playback_time').html('' + minutes + ':' + seconds);
+    var seconds = diff_in_seconds - ( minutes * 60 ) + '';
 
-    }, 1000);
+    if ( minutes.length == 1 ) {
+        minutes = '0' + minutes;
+    }
+    if ( seconds.length == 1 ) {
+        seconds = '0' + seconds;
+    }
 
-})(jQuery, marvin);
+    $('#playback_time').html('' + minutes + ':' + seconds);
+
+}, 1000);
+
+$('#play_pause_button').hammer().on('tap', function(event) {
+    var el = $(this);
+
+    var isPlaying = el.hasClass('fa-pause');
+
+    if ( isPlaying ) {
+        pauseAt = new Date().getTime();
+        el.removeClass('fa-pause').addClass('fa-play');
+    }
+
+    else {
+        var diff = new Date().getTime() - pauseAt;
+        startAt += diff;
+        pauseAt = null;
+        el.removeClass('fa-play').addClass('fa-pause');
+    }
+});
