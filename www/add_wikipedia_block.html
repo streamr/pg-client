@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register for Streamr</title>
+    <title>Add Wikipedia Block</title>
     <meta charset="utf8">
     <meta name="viewport" content="width=device-width">
     <!-- Bootstrap -->
@@ -14,10 +14,18 @@
     <div class="container">
         <nav class="navbar navbar-default navbar-top">
             <button class="btn btn-default back" type="button"><i class="fa fa-angle-double-left"></i> Back</i></button>
-            <h2>Register for Streamr</h2>
+            <h2>Add Wikipedia Block</h2>
         </nav>
+        <div class="row" id="search_toolbar">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input id="keyword" class="form-control input-lg movie-search" type="text" placeholder="Enter wikipedia page title">
+                    <span class="input-group-btn"><button class="btn btn-lg" type="button"><i class="fa fa-search"></i></button></span>
+                </div>
+            </div>
+        </div>
         <div class="row">
-            <div class="col-md-12" id="content">
+            <div class="col-md-12" id="search_results">
             </div>
         </div>
     </div>
@@ -32,9 +40,7 @@
     <script src="javascripts/marvin.js"></script>
     <script src="javascripts/marvin_templates.js"></script>
     <script src="javascripts/streamr.js"></script>
-    <script src="javascripts/user_registration.js"></script>
+    <script src="javascripts/add_wikipedia_block.js"></script>
 </body>
 </html>
-
-
 

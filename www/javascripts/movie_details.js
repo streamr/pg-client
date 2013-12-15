@@ -12,17 +12,19 @@ var streamListEl = $('#stream_list');
 marvin.movies.get(movie.href, function(data) {
     movieInfo = data.movie;
     var renderedHtml = marvin.templates.movie_streams(data.movie);
-    
+
     streamListEl.html(renderedHtml);
 
-    // Make sure checkboxes are selected immediately
-    streamListEl.find('input[type="checkbox"], label').on('click', function(e) {
-        e.preventDefault();
-    });
-    streamListEl.find('> div').hammer().on('tap', function(event) {
-        var input = $(this).find('input[type="checkbox"]').get(0);
-        input.checked = !input.checked;
-    });
+    if ( data.movie.streams.length > 0 ) {
+        // Make sure checkboxes are selected immediately
+        streamListEl.find('input[type="checkbox"], label').on('click', function(e) {
+            e.preventDefault();
+        });
+        streamListEl.find('> div').hammer().on('tap', function(event) {
+            var input = $(this).find('input[type="checkbox"]').get(0);
+            input.checked = !input.checked;
+        });
+    }
 });
 
 
@@ -39,11 +41,8 @@ $('#start_playing_button').hammer().on('tap', function(event) {
         return;
     }
 
-    // Save to localStorage info about the movie
-    localStorage.setItem("playBackMovie", JSON.stringify({
-        'movie':            movieInfo,
-        'selectedStreams':  selectedStreams
-    }));
+    // Save to localStorage info about the selected streams
+    localStorage.setItem("selectedStreams", JSON.stringify(selectedStreams));
 
     // Load the playback view
     var webView = new steroids.views.WebView( "playback.html" );

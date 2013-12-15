@@ -5,11 +5,12 @@
         var form = $('form');
         localStorage.setItem('newItemToAdd', JSON.stringify({
             'title': form.find('[name="title"]').val(),
-            'content': form.find('[name="content"]').val()
+            'content_type': 'text',
+            'content': {
+                'text': form.find('[name="content"]').val()
+            },
+            'popups_to_close': 1
         }));
-
-        // Close this window
-        steroids.layers.pop();
     }
 
     $('form').on('submit', function(event) {
