@@ -7,7 +7,6 @@
 
     function searchMovies() {
         var searchQuery = $searchField.val();
-        history.replaceState(null, null, '?search=' + searchQuery);
         marvin.movies.search(searchQuery, function (response) {
             var renderedHtml = marvin.templates.movies(response);
             $('#search_results').html(renderedHtml);
@@ -56,17 +55,9 @@
         } while ((textHeight > maxHeight || textWidth > maxWidth) && fontSize > 3);
     }
 
-    // Onload stuff
-    (function setSearchValFromUrl() {
-        var search = $.url().param('search');
-        if (search) {
-            $searchField.val(search);
-            searchMovies();
-        }
-    })();
-
     $(window).resize(scaleStreamCount);
 
+    // Show most popular movies (in terms of number of streams) on startup
     $(document).ready(function () {
         searchMovies();
     });

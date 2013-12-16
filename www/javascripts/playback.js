@@ -1,8 +1,6 @@
 // Get the movie from localStorage
 var movie = JSON.parse(localStorage.getItem("movieDetailsMovie")).movie;
 var selectedStreams = JSON.parse(localStorage.getItem('selectedStreams'));
-var renderedHtml = marvin.templates.playback(movie);
-$('#container').html(renderedHtml);
 
 // If we are creating a new stream
 var newStream = JSON.parse(localStorage.getItem("playBackNewStream"));
@@ -11,7 +9,73 @@ if ( newStream != null ) {
     localStorage.removeItem("playBackNewStream");
 }
 
+// need some global references
+var pauseAt = null;
+var startAt = new Date().getTime();
+var entryPointInMs;
+
+// Keep track of which element is currently viewed
+var currentEntryInViewport;
+
+var renderedHtml = marvin.templates.playback({
+    movie: movie,
+    newStream: newStream
+});
+
+$('#container').html(renderedHtml);
+
 streamrInit();
+
+// Cache some selectors
+var innerViewport = $('#content #inner_viewport');
+
+// Make sure entries are always of correct size
+var fixSizeOfEntriesTimeout = null;
+$(window).on('resize', function(e) {
+   
+    // Prevent event from firing several times 
+    if ( fixSizeOfEntriesTimeout != null ) {
+        clearTimeout(fixSizeOfEntriesTimeout);
+    }
+
+    fixSizeOfEntriesTimeout = setTimeout(fixSizeOfEntries, 100); 
+});
+
+function fixSizeOfEntries(el) {
+
+    if ( el ) {
+        var entryElements = el;
+    }
+
+    else {
+
+        // Make sure elements in innerViewport fills whole screen vertically
+        innerViewport.css({
+            'height': $(window).height() - ( $('#top_toolbar').outerHeight(true) +
+                        $('#bottom_toolbar').outerHeight(true) ) + 'px'
+        });
+
+        var entryElements = innerViewport.find('> div');
+
+    }
+
+    var innerViewportCssHeight = innerViewport.css('height');
+    var entryWidth = $(window).width() - 30; // -30 px because of padding of parent element
+
+    entryElements.each(function() {
+        var el = $(this);
+        el.css({
+            'width': entryWidth + 'px'
+        });
+    });
+
+    if ( !el && entryElements.length > 0 ) {
+        focusToEntry(currentEntryInViewport);
+    }
+}
+
+// Do once on page load
+fixSizeOfEntries();
 
 // Need to poll for changes in localStorage..
 // TODO: is there a better solution to this?
@@ -48,14 +112,6 @@ function checkForNewEntriesToAdd() {
         );
     }
 }
-
-// need some global references
-var pauseAt = null;
-var startAt = new Date().getTime();
-var entryPointInMs;
-
-// Cache some selectors
-var innerViewport = $('#content #inner_viewport');
 
 // Fetch all the stream entries for each stream
 var sortedEntries = [];
@@ -133,11 +189,12 @@ function checkForStreamEntriesToShow() {
 }
 setInterval(checkForStreamEntriesToShow, 500);
 
-// Make sure elements in innerViewport fills whole screen vertically
-innerViewport.css({
-    'height': $(window).height() - ( $('#top_toolbar').outerHeight(true) +
-                $('#bottom_toolbar').outerHeight(true) ) + 'px'
-});
+function focusToEntry(index) {
+    innerViewport.css({
+        // Focus viewport to the wanted entry
+        'right': index * $(window).width() + 'px'
+    });
+}
 
 function showEntry(data) {
 
@@ -156,16 +213,15 @@ function showEntry(data) {
             break;
 
     }
-    
-    innerViewport.append($(renderedHtml).css({
-        'width': $(window).width() - 30 + 'px', // -30 px because of padding of parent element
-        'height': innerViewport.css('height')
-    }));
 
-    innerViewport.css({
-        // Make sure viewport is showing latest entry
-        'right': (innerViewport.find('> div').length - 1) * $(window).width() + 'px'
-    });
+    var el = $(renderedHtml);
+    innerViewport.append(el);
+    // Ensure size of element is correct
+    fixSizeOfEntries(el);
+
+    currentEntryInViewport = innerViewport.find('> div').length - 1;
+
+    focusToEntry(currentEntryInViewport);
 }
 
 
@@ -179,17 +235,15 @@ $('#add_item_button').hammer().on('tap', function(event) {
 innerViewport.parent().hammer({
     'swipe_velocity': 0.2
 }).on('swiperight', function(event) {
-    var el = $(this).find('> div');
-    var currentRightPos = parseInt(el.css('right').replace('px', ''));
-    el.css('right', currentRightPos - $(window).width() + 'px');
+    currentEntryInViewport --;
+    focusToEntry(currentEntryInViewport);
 });
 
 innerViewport.parent().hammer({
     'swipe_velocity': 0.2
 }).on('swipeleft', function(event) {
-    var el = $(this).find('> div');
-    var currentRightPos = parseInt(el.css('right').replace('px', ''));
-    el.css('right', currentRightPos + $(window).width() + 'px');
+    currentEntryInViewport ++;
+    focusToEntry(currentEntryInViewport);
 });
 
 

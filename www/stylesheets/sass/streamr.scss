@@ -6,7 +6,7 @@ $textColor: #c8c8c8;
 .search-result-wikipedia {
     margin:10px 10px;
     padding:10px;
-    font-size:20px; 
+    font-size:20px;
     border-radius: 6px;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, 0 1px 1px rgba(0, 0, 0, 0.2);
     color: #eee;
@@ -14,20 +14,6 @@ $textColor: #c8c8c8;
 
     background-color: $button-color;
     background-image: linear-gradient(to bottom, lighten($button-color, 4%), $button-color);
-}
-
-#wikipediaPreview {
-
-    // Make links invisible
-    #preview a {
-        color:$textColor;
-    }
-
-}
-
-.wikipedia_entry a {
-    // Make links invisible
-    color:$textColor;
 }
 
 .entry {

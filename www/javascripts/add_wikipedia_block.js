@@ -1,3 +1,5 @@
+streamrInit();
+
 // Cache frequently accessed selector
 var searchResultsEl = $('#search_results');
 
@@ -55,7 +57,7 @@ function showArticlePreview() {
                 }
 
                 var img = $('<img />').attr('src', src);
-                var imgContainer = $('<div id="img" />').html(img);
+                var imgContainer = $('<div class="img" />').html(img);
                 imageFound = true;
             }
 
@@ -63,14 +65,16 @@ function showArticlePreview() {
             tmpEl.find('> *:not(p)').remove();
             tmpEl.find('.reference').remove();
             tmpEl.find('.error').remove();
+            tmpEl.find('sup').remove();
+
+            // Remove links
+            tmpEl.html( tmpEl.html().replace(/<a.*?>(.*?)<\/a>/g, "$1") )
 
             if ( imageFound ) {
                 tmpEl.prepend(imgContainer);
             }
 
-            $('#preview').html(tmpEl.html()).find('a').on('click', function(e) {
-                e.preventDefault();
-            });
+            $('#preview').html(tmpEl.html());
 
             // Show add btn
             $('#actions').show();

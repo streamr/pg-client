@@ -1,6 +1,8 @@
 (function ($, marvin) {
     "use strict";
 
+    streamrInit();
+
     function addTextBlock() {
         var form = $('form');
         localStorage.setItem('newItemToAdd', JSON.stringify({
