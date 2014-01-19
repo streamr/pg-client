@@ -32,13 +32,13 @@ var innerViewport = $('#content #inner_viewport');
 // Make sure entries are always of correct size
 var fixSizeOfEntriesTimeout = null;
 $(window).on('resize', function(e) {
-   
-    // Prevent event from firing several times 
+
+    // Prevent event from firing several times
     if ( fixSizeOfEntriesTimeout != null ) {
         clearTimeout(fixSizeOfEntriesTimeout);
     }
 
-    fixSizeOfEntriesTimeout = setTimeout(fixSizeOfEntries, 100); 
+    fixSizeOfEntriesTimeout = setTimeout(fixSizeOfEntries, 100);
 });
 
 function fixSizeOfEntries(el) {
@@ -227,6 +227,12 @@ function showEntry(data) {
 
 $('#add_item_button').hammer().on('tap', function(event) {
     entryPointInMs = new Date().getTime() - startAt;
+
+    // Check if video is paused => subtract the pause duration from entryPointInMs
+    if ( pauseAt != null ) {
+        var diff = new Date().getTime() - pauseAt;
+        entryPointInMs -= diff;
+    }
 
     // Start listening for added content
     timerForNewEntries = window.setInterval(checkForNewEntriesToAdd, 200);
