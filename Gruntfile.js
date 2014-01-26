@@ -102,6 +102,7 @@ module.exports = function (grunt) {
   // Default task
   grunt.registerTask('default', [
     'server',
+    'steroids-make'
   ]);
   grunt.registerTask('server', [
     'concurrent:server',
