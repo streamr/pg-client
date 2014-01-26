@@ -13,13 +13,18 @@
 <body>
     <div class="container" id="container">
     </div>
+    <div id="time_seek_popup">
+        <input type="number" min="0">
+        <button type="btn btn-primary">Go to this position</button>
+        <button type="btn cancel">Cancel</button>
+    </div>
 
     <!-- cordova.js is served from localhost to ensure the correct version -->
     <script src="http://localhost/cordova.js"></script>
 
     <script src="components/steroids-js/steroids.js"></script>
     <script src="components/jquery/jquery.min.js"></script>
-    <script src="components/hammerjs/dist/jquery.hammer.min.js"></script>
+    <script src="components/jquery-hammerjs/jquery.hammer.min.js"></script>
     <script src="components/handlebars/handlebars.runtime.min.js"></script>
     <script src="javascripts/marvin.js"></script>
     <script src="javascripts/marvin_templates.js"></script>

@@ -13,7 +13,7 @@
   "dependencies": {
     "jquery": "~2.0.3",
     "steroids-js": "2.7.x",
-    "hammerjs": "~1.0.5",
+    "jquery-hammerjs": "*",
     "topcoat": "~0.8.0",
     "handlebars": "~1.1.2",
     "purl": "~2.3.1"
