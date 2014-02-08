@@ -50,3 +50,9 @@ function getAuthToken() {
 function setUser(user) {
     localStorage.setItem("user", user);
 }
+
+function logoutUser() {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("username");
+    localStorage.removeItem("user");
+}

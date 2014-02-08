@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html id="pageIndex">
 <head>
     <title>Search</title>
     <meta charset="utf-8">
@@ -12,17 +12,31 @@
 
 </head>
 <body>
-    <div class="container">
-        <div class="row" id="search_toolbar">
-            <div class="col-md-12">
-                <div class="input-group">
-                    <input class="form-control input-lg movie-search" type="text" placeholder="Enter movie title here">
-                    <span class="input-group-btn"><button class="btn btn-lg" type="button"><i class="fa fa-search"></i></button></span>
+    <div id="main-content">
+        <div class="container">
+            <div class="row" id="search_toolbar">
+                <div class="col-md-12">
+                    <button class="btn btn-lg" id="menu-button">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <div class="input-group">
+                        <input class="form-control input-lg movie-search" type="text" placeholder="Enter movie title here">
+                        <span class="input-group-btn"><button class="btn btn-lg" type="button"><i class="fa fa-search"></i></button></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" id="search_results">
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12" id="search_results">
+    </div>
+    <div id="settings">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h2 class="panel-title"><i class="fa fa-cogs"></i> Settings</h2>
+            </div>
+            <div class="panel-body" id="settings_body">
             </div>
         </div>
     </div>

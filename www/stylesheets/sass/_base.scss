@@ -245,3 +245,56 @@ form {
     -webkit-transition:all 0.5s;
     transition:all 0.5s;
 }
+
+#search_toolbar #menu-button {
+    float:left;
+    margin-right:20px;
+}
+
+#main-content {
+    width:100%;
+    min-height:100%;
+    background:#272b30;
+    -webkit-transform:translate3d(0,0,0);
+    z-index:2;
+    -webkit-transition:all .3s;
+}
+
+#settings {
+    height:100%;
+    width:90%;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+
+#settings .panel {
+    height:100%;
+}
+
+#settings .panel .panel-heading {
+    border-radius:0px;
+    border-top:none;
+    border-left:none;
+}
+
+#settings .panel-heading h2 {
+    font-size:1.8em;
+}
+
+#settings .panel .list-group-item {
+    background:#353a41;
+}
+
+#pageIndex, #pageIndex body {
+    overflow:hidden;
+    width:100%;
+    height:100%;
+}
+
+#pageIndex #main-content {
+    height:100%;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}

@@ -22,6 +22,12 @@
             $('#search_results > div').hammer().on('tap', function(e) {
                 var el = $(this);
 
+                // Check if drawer is open => just close it and do nothing else
+                if ( drawerOpen ) {
+                    hideDrawer();
+                    return;
+                }
+
                 // Give touch feedback
                 el.addClass('active');
                 window.setTimeout(function() {
@@ -60,6 +66,58 @@
     // Show most popular movies (in terms of number of streams) on startup
     $(document).ready(function () {
         searchMovies();
+    });
+
+    // Set content for settings page
+    var renderedHtml = marvin.templates.settings({
+        'username': localStorage.getItem('username')
+    });
+    $('#settings_body').html(renderedHtml).find('#logout_btn').hammer().on('tap', function() {
+        logoutUser();
+        alert("ok");
+    });
+
+    // Show/hide settings page
+    var mainContentEl = $('#main-content');
+    var bodyEl = $('body');
+
+    var drawerPosition = null;
+    var drawerOpen = false;
+
+    function showDrawer() {
+        if ( drawerPosition == null ) {
+            var menuButton = $('#menu-button');
+            drawerPosition = $(window).width() - (menuButton.offset().left + menuButton.width() + 40);
+        }
+
+        mainContentEl.css('transform', 'translate3d(' + drawerPosition + 'px,0,0)');
+        drawerOpen = true;
+    }
+
+    function hideDrawer() {
+        mainContentEl.css('transform', 'translate3d(0px,0,0)');
+        drawerOpen = false;
+    }
+
+    $('#menu-button').hammer({
+        'prevent_default': true,
+    }).on('tap', function(e) {
+        if ( drawerOpen ) {
+            hideDrawer();
+        }
+        else {
+            showDrawer();
+        }
+    });
+    mainContentEl.hammer({
+        'swipe_velocity': 1
+    }).on('swipeleft', function(e) {
+        hideDrawer();
+    });
+    mainContentEl.hammer({
+        'swipe_velocity': 0.1
+    }).on('swiperight', function(e) {
+        showDrawer();
     });
 
 })(jQuery, marvin);

@@ -17,7 +17,7 @@
         event.preventDefault();
 
     }).find('[type="submit"]').hammer().on('tap', function(event) {
-        
+
         var form = $(this).parents('form:first');
 
         marvin.users.create({
@@ -26,6 +26,7 @@
             'password': form.find('[name="password"]').val()
         }, function(data) {
             setAuthToken(data.auth_token);
+            localStorage.setItem("username", form.find('[name="username"]').val());
             setUser(data.user);
 
             // TODO
@@ -33,7 +34,7 @@
 
             // TODO: redirect to wanted page
         });
- 
+
     });
 
 })(jQuery, marvin);
