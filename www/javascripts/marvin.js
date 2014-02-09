@@ -18,9 +18,15 @@ var marvin = (function ($) {
         /*
         * Currently searches OMDb for data, should use our own api so that we can get the IDs
         */
-        function search(searchTerm, callback) {
-            $.ajax({
+        function search(searchTerm, callback, searchRequest) {
+            return $.ajax({
                 url: searchUrl,
+                beforeSend: function() {
+                    // Abort previous request
+                    if ( searchRequest != null ) {
+                        searchRequest.abort();
+                    }
+                },
                 data: {
                     'q': searchTerm,
                 },
@@ -28,7 +34,9 @@ var marvin = (function ($) {
                     callback(data);
                 },
                 error: function (data, textStatus, errorThrown) {
-                    errorHandler(textStatus, errorThrown);
+                    if ( errorThrown != "abort" ) {
+                        errorHandler(textStatus, errorThrown);
+                    }
                 }
             });
         }

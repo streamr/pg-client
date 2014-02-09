@@ -5,9 +5,10 @@
 
     $searchField.on('keyup', searchMovies);
 
+    var searchRequest = null;
     function searchMovies() {
         var searchQuery = $searchField.val();
-        marvin.movies.search(searchQuery, function (response) {
+        searchRequest = marvin.movies.search(searchQuery, function (response) {
             var renderedHtml = marvin.templates.movies(response);
             $('#search_results').html(renderedHtml);
             scaleStreamCount();
@@ -42,7 +43,7 @@
                 steroids.layers.push(webView);
             });
 
-        });
+        }, searchRequest);
     }
 
     function scaleStreamCount() {
