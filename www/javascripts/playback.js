@@ -190,6 +190,23 @@ function checkForStreamEntriesToShow() {
 setInterval(checkForStreamEntriesToShow, 500);
 
 function focusToEntry(index) {
+
+    var lastEntryIndex = innerViewport.find('> div').length - 1;
+
+    if ( index === "last" ) {
+        index = lastEntryIndex;
+    }
+
+    // Check that we are not out of bounds
+    if ( index < 0 ) {
+        index = 0;
+    }
+    else if ( index > lastEntryIndex ) {
+        index = lastEntryIndex;
+    }
+
+    currentEntryInViewport = index;
+
     innerViewport.css({
         // Focus viewport to the wanted entry
         'right': index * $(window).width() + 'px'
@@ -219,9 +236,7 @@ function showEntry(data) {
     // Ensure size of element is correct
     fixSizeOfEntries(el);
 
-    currentEntryInViewport = innerViewport.find('> div').length - 1;
-
-    focusToEntry(currentEntryInViewport);
+    focusToEntry("last");
 }
 
 
@@ -239,17 +254,15 @@ $('#add_item_button').hammer().on('tap', function(event) {
 });
 
 innerViewport.parent().hammer({
-    'swipe_velocity': 0.2
+    'swipe_velocity': 0.1
 }).on('swiperight', function(event) {
-    currentEntryInViewport --;
-    focusToEntry(currentEntryInViewport);
+    focusToEntry(currentEntryInViewport - 1);
 });
 
 innerViewport.parent().hammer({
-    'swipe_velocity': 0.2
+    'swipe_velocity': 0.1
 }).on('swipeleft', function(event) {
-    currentEntryInViewport ++;
-    focusToEntry(currentEntryInViewport);
+    focusToEntry(currentEntryInViewport + 1);
 });
 
 
