@@ -4,6 +4,27 @@
 </nav>
 <div class="row">
     <div class="col-md-12" id="movie_details">
+        <div class="basic_info">
+            {{#if cover_img }}
+                <div class="cover_img" style="background-image:url({{ cover_img }})"></div>
+            {{/if}}
+            <dl>
+                {{#if year}}
+                    <dt>Year</dt>
+                        <dd>{{year}}</dd>
+                {{/if}}
+
+                {{#if imdb_rating }}
+                    <dt>IMDB rating</dt>
+                        <dd>{{imdb_rating}}/10 {{#if imdb_votes}}({{imdb_votes}} votes){{/if}}</dd>
+                {{/if}}
+
+                {{#if duration}}
+                    <dt>Duration</dt>
+                        <dd>{{duration}}</dd>
+                {{/if}}
+            </dl>
+        </div>
         <h2>Streams</h2>
         <button type="button" class="btn btn-primary" data-require-login data-tap-url="create_stream.html" id="add_new_stream_button"><i class="fa fa-plus"></i> Create new stream</button>
         <div class="streams" id="stream_list">

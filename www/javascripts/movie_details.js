@@ -1,5 +1,10 @@
 var movie = JSON.parse(localStorage.getItem("movieDetailsMovie")).movie;
 
+if ( movie.duration_in_s !== undefined && movie.duration_in_s > 0 ) {
+    var minutes = Math.round(movie.duration_in_s / 60) + '';
+    movie.duration = minutes + " min";
+}
+
 var renderedHtml = marvin.templates.movie_details(movie);
 $('#main_container').html(renderedHtml);
 
