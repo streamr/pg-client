@@ -1,0 +1,13 @@
+<div class="list-group">
+    {{#if username}}
+        <a class="list-group-item">
+            <h4 class="list-group-item-heading"><i class="fa fa-user"></i> Logged in as {{username}}</h4>
+            <button class="btn btn-primary" id="logout_btn"><i class="fa fa-sign-out"></i> Logout</button>
+        </a>
+    {{else}}
+        <a class="list-group-item">
+            <h4 class="list-group-item-heading"><i class="fa fa-user"></i> You are not logged in</h4>
+            <button class="btn btn-primary" data-tap-url="user_registration.html" id="login_btn"><i class="fa fa-sign-in"></i> Login/Register</button>
+        </a>
+    {{/if}}
+</div>

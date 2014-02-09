@@ -102,6 +102,7 @@ $button-color: #333;
 
 #play_pause_button {
     font-size:3.4em;
+    margin-left:1.5em;
 }
 
 .navbar-fixed-bottom > * {
@@ -236,9 +237,8 @@ form {
 #playback_row #content #inner_viewport {
     width:99999%;
     overflow:hidden;
-    position:relative;
-    -webkit-transition:all 0.5s;
-    transition:all 0.5s;
+    -webkit-transition:all 0.35s;
+    transition:all 0.35s;
 }
 
 #search_toolbar #menu-button {
@@ -297,9 +297,8 @@ form {
     -webkit-transition:all .3s;
 }
 
-.popup.movie_ended {
+.popup {
     position:fixed;
-    top:15%;
     left:10%;
     width:80%;
     text-align:center;
@@ -308,6 +307,13 @@ form {
     border-radius:1em;
     -webkit-transition:opacity .35s;
     background:#49515a;
+    opacity:0;
+    visibility:hidden;
+}
+
+.popup.active {
+    visibility:visible;
+    opacity:1;
 }
 
 .popup.movie_ended p {
@@ -326,4 +332,41 @@ form {
 
 .movie_ended button .fa {
     color:black;
+}
+
+#time_seek_popup {
+    bottom:12%;
+    padding-left:0.1em;
+    padding-right:0.1em;
+}
+
+#time_seek_popup h2 {
+    margin-bottom:1em;
+}
+
+#time_seek_popup .label_row label {
+    display:inline-block;
+    width:80px;
+}
+
+#time_seek_popup .input_row input {
+    display:inline-block;
+    width:80px;
+}
+
+#time_seek_popup #hours:after {
+    content:":";
+}
+
+#time_seek_popup button {
+    margin-top:1em;
+    margin-right:1em;
+}
+
+#time_seek_popup button .fa {
+    color:white;
+}
+
+#time_seek_popup button:last-child {
+    margin-right:0;
 }

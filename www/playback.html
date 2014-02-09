@@ -13,10 +13,20 @@
 <body>
     <div class="container" id="container">
     </div>
-    <div id="time_seek_popup">
-        <input type="number" min="0">
-        <button type="btn btn-primary">Go to this position</button>
-        <button type="btn cancel">Cancel</button>
+    <div id="time_seek_popup" class="popup">
+        <h2>Fast forward to position</h2>
+        <div class="label_row">
+            <label for="hours">Hours</label>
+            <label for="mins">Mins</label>
+            <label for="secs">Secs</label>
+        </div>
+        <div class="input_row">
+            <input type="number" id="hours" placeholder="Hours" min="0">
+            <input type="number" id="mins" placeholder="Mins" min="0">
+            <input type="number" id="secs" placeholder="Secs" min="0">
+        </div>
+        <button class="btn btn-primary jump-btn"><i class="fa fa-check"></i> Go!</button>
+        <button class="btn cancel">Cancel</button>
     </div>
 
     <!-- cordova.js is served from localhost to ensure the correct version -->
