@@ -301,3 +301,34 @@ form {
     z-index:2;
     -webkit-transition:all .3s;
 }
+
+.popup.movie_ended {
+    position:fixed;
+    top:15%;
+    left:10%;
+    width:80%;
+    text-align:center;
+    font-size:1.5em;
+    padding:1.5em 1em;
+    border-radius:1em;
+    -webkit-transition:opacity .35s;
+    background:#49515a;
+}
+
+.popup.movie_ended p {
+    color:white;
+    font-size:1.2em;
+}
+
+.movie_ended button {
+    margin-top:1em;
+    margin-left:1em;
+}
+
+.movie_ended button.first {
+    margin-left:0;
+}
+
+.movie_ended button .fa {
+    color:black;
+}

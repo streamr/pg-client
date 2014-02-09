@@ -81,7 +81,7 @@ fixSizeOfEntries();
 // TODO: is there a better solution to this?
 // Previously we used window.postMessage, but this
 // caused problems for testing in web browser
-var timerForNewEntries;
+var timerForNewEntries = null;
 function checkForNewEntriesToAdd() {
     if ( localStorage.getItem('newItemToAdd') != null ) {
         var data = JSON.parse(localStorage.getItem('newItemToAdd'));
@@ -187,7 +187,7 @@ function checkForStreamEntriesToShow() {
         }
     }
 }
-setInterval(checkForStreamEntriesToShow, 500);
+var entriesInterval = setInterval(checkForStreamEntriesToShow, 500);
 
 function focusToEntry(index) {
 
@@ -250,7 +250,9 @@ $('#add_item_button').hammer().on('tap', function(event) {
     }
 
     // Start listening for added content
-    timerForNewEntries = window.setInterval(checkForNewEntriesToAdd, 200);
+    if ( timerForNewEntries == null ) {
+        timerForNewEntries = window.setInterval(checkForNewEntriesToAdd, 200);
+    }
 });
 
 innerViewport.parent().hammer({
@@ -267,7 +269,7 @@ innerViewport.parent().hammer({
 
 
 // Playback timer
-setInterval(function() {
+var intervalTimer = setInterval(function() {
 
     // If video is paused => do nothing
     if ( pauseAt != null ) {
@@ -277,6 +279,36 @@ setInterval(function() {
     var diff = new Date().getTime() - startAt;
 
     var diff_in_seconds = Math.round(diff / 1000);
+
+    // Check if movie has ended
+    if ( movie.duration_in_s !== undefined && diff_in_seconds > movie.duration_in_s ) {
+
+        clearInterval(intervalTimer);
+        clearInterval(entriesInterval);
+
+        // Show popup that movie ended
+        $('.movie_ended').remove();
+        var popup = $("<div class='popup movie_ended'>"
+                        + "<p>The movie has ended</p>"
+                        + "<button class='btn first goback'><i class='fa fa-angle-double-left'></i> Go back</button>"
+                        + "<button class='btn closepopup'>Close</button>"
+                        + "<button class='btn replay'><i class='fa fa-repeat'></i> Replay</button>"
+                    + "</div>").css('opacity', '0').appendTo('body');
+        popup.css({
+            'top': ($(window).height() - popup.height()) / 2 - 38 + 'px',
+            'opacity': 1
+        }).find('.closepopup').hammer().on('tap', function() {
+            popup.remove();
+        });
+        popup.find('.replay').hammer().on('tap', function() {
+            location.reload();
+        });
+        popup.find('.goback').hammer().on('tap', function() {
+            steroids.layers.pop();
+        });
+
+        return;
+    }
 
     var minutes = Math.floor(diff_in_seconds / 60) + '';
 
