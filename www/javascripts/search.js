@@ -75,12 +75,19 @@
             'username': localStorage.getItem('username')
         });
 
-        $('#settings_body').html(renderedHtml).find('#logout_btn').hammer().on('tap', function() {
+        var $settingsBody = $('#settings_body');
+
+        $settingsBody.html(renderedHtml).find('#logout_btn').hammer().on('tap', function() {
             logoutUser();
             refreshSettingsPage();
         });
 
-        streamrInit($('#settings_body'));
+        var notificationLevel = localStorage.getItem("notificationLevel") || "none";
+        $settingsBody.find('#notificationLevel').val(notificationLevel).on('change', function(e) {
+            localStorage.setItem("notificationLevel", $(this).val());
+        });
+
+        streamrInit($settingsBody);
 
     }
     refreshSettingsPage();
