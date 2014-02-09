@@ -68,14 +68,22 @@
         searchMovies();
     });
 
-    // Set content for settings page
-    var renderedHtml = marvin.templates.settings({
-        'username': localStorage.getItem('username')
-    });
-    $('#settings_body').html(renderedHtml).find('#logout_btn').hammer().on('tap', function() {
-        logoutUser();
-        alert("ok");
-    });
+    function refreshSettingsPage() {
+
+        // Set content for settings page
+        var renderedHtml = marvin.templates.settings({
+            'username': localStorage.getItem('username')
+        });
+
+        $('#settings_body').html(renderedHtml).find('#logout_btn').hammer().on('tap', function() {
+            logoutUser();
+            refreshSettingsPage();
+        });
+
+        streamrInit($('#settings_body'));
+
+    }
+    refreshSettingsPage();
 
     // Show/hide settings page
     var mainContentEl = $('#main-content');
@@ -88,6 +96,7 @@
         if ( drawerPosition == null ) {
             var menuButton = $('#menu-button');
             drawerPosition = $(window).width() - (menuButton.offset().left + menuButton.width() + 40);
+            $('#settings').width(drawerPosition - 1);
         }
 
         mainContentEl.css('transform', 'translate3d(' + drawerPosition + 'px,0,0)');
@@ -119,5 +128,12 @@
     }).on('swiperight', function(e) {
         showDrawer();
     });
+
+    // Need to update page content when coming back from other pages
+    document.addEventListener("visibilitychange", function() {
+        if ( document.visibilityState == "visible" ) {
+            refreshSettingsPage();
+        }
+    }, false);
 
 })(jQuery, marvin);

@@ -2,10 +2,15 @@
 // when tap event is fired (milliseconds)
 var touchFeedbackDelay = 100;
 
-function streamrInit() {
+function streamrInit(element) {
+
+    if ( element === undefined ) {
+        element = $('body');
+    }
+
     var tap_event_attr_name = 'data-tap-url';
 
-    $('[' + tap_event_attr_name + ']').hammer().on('tap', function(event) {
+    element.find('[' + tap_event_attr_name + ']').hammer().on('tap', function(event) {
         var url = $(this).attr(tap_event_attr_name);
 
         // Check if link requires login
@@ -28,7 +33,7 @@ function streamrInit() {
         }
     });
 
-    $('button.back').hammer().on('tap', function(event) {
+    element.find('button.back').hammer().on('tap', function(event) {
         steroids.layers.pop();
     });
 }

@@ -251,22 +251,13 @@ form {
     margin-right:20px;
 }
 
-#main-content {
-    width:100%;
-    min-height:100%;
-    background:#272b30;
-    -webkit-transform:translate3d(0,0,0);
-    z-index:2;
-    -webkit-transition:all .3s;
-}
-
 #settings {
     height:100%;
     width:90%;
     position:absolute;
     top:0;
     left:0;
-    z-index:-1;
+    z-index:1;
 }
 
 #settings .panel {
@@ -287,6 +278,10 @@ form {
     background:#353a41;
 }
 
+#settings .list-group-item-heading {
+    margin-bottom:0.6em;
+}
+
 #pageIndex, #pageIndex body {
     overflow:hidden;
     width:100%;
@@ -295,6 +290,14 @@ form {
 
 #pageIndex #main-content {
     height:100%;
+    position:absolute;
+    top:0;
+    left:0;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
+    width:100%;
+    background:#272b30;
+    -webkit-transform:translate3d(0,0,0);
+    z-index:2;
+    -webkit-transition:all .3s;
 }
