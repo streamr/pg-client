@@ -20,10 +20,9 @@
             // Save username
             localStorage.setItem('username', form.find('[name="username"]').val());
 
-            // TODO
-            alert("Logged in successfully");
+            // Just close the login window
+            steroids.layers.pop();
 
-            // TODO: redirect to wanted page
         });
 
     });

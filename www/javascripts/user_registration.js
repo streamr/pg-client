@@ -29,10 +29,11 @@
             localStorage.setItem("username", form.find('[name="username"]').val());
             setUser(data.user);
 
-            // TODO
             alert("Account created successfully");
 
-            // TODO: redirect to wanted page
+            // Close this window
+            steroids.layers.pop();
+
         });
 
     });
