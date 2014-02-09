@@ -2,8 +2,6 @@
 var movie = JSON.parse(localStorage.getItem("movieDetailsMovie")).movie;
 var selectedStreams = JSON.parse(localStorage.getItem('selectedStreams'));
 
-movie.duration_in_s = 25;
-
 // If we are creating a new stream
 var newStream = JSON.parse(localStorage.getItem("playBackNewStream"));
 if ( newStream != null ) {
