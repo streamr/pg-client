@@ -209,6 +209,7 @@ function checkForStreamEntriesToShow( skipPauseCheck ) {
                 else {
                     i -= 1;
                 }
+
                 focusToEntry(i);
                 return;
             }
@@ -220,7 +221,7 @@ function checkForStreamEntriesToShow( skipPauseCheck ) {
 }
 var entriesInterval = setInterval(checkForStreamEntriesToShow, 500);
 
-function focusToEntry(index) {
+function focusToEntry(index, suppressNotifications) {
 
     var lastEntryIndex = innerViewport.find('> div').length - 1;
 
@@ -236,12 +237,35 @@ function focusToEntry(index) {
         index = lastEntryIndex;
     }
 
-    currentEntryInViewport = index;
+    if ( currentEntryInViewport != index ) {
+
+        currentEntryInViewport = index;
+
+        // Notifications
+        if ( suppressNotifications === undefined ) {
+            switch ( localStorage.getItem("notificationLevel") ) {
+
+                case "vibrate":
+                    navigator.notification.vibrate(500); // 500 ms
+                    break;
+
+                case "beep":
+                    navigator.notification.beep(1);
+                    break;
+
+                case "vibrate_beep":
+                    navigator.notification.vibrate(500); // 500 ms
+                    navigator.notification.beep(1);
+                    break;
+            }
+        }
+    }
 
     innerViewport.css({
         // Focus viewport to the wanted entry
         'transform': 'translate3d(' + ( - index * $(window).width() ) + 'px,0,0)'
     });
+
 }
 
 function showEntry(data, entryInMs, nofocus) {
@@ -293,14 +317,14 @@ innerViewport.parent().hammer({
     'swipe_velocity': 0.1,
     'prevent_default': true
 }).on('swiperight', function(event) {
-    focusToEntry(currentEntryInViewport - 1);
+    focusToEntry(currentEntryInViewport - 1, true);
 });
 
 innerViewport.parent().hammer({
     'swipe_velocity': 0.1,
     'prevent_default': true
 }).on('swipeleft', function(event) {
-    focusToEntry(currentEntryInViewport + 1);
+    focusToEntry(currentEntryInViewport + 1, true);
 });
 
 
