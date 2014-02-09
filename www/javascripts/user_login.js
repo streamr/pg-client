@@ -17,6 +17,9 @@
         }, function(data) {
             setAuthToken(data.auth_token);
 
+            // Save username
+            localStorage.setItem('username', form.find('[name="username"]').val());
+
             // TODO
             alert("Logged in successfully");
 
