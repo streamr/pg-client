@@ -2,8 +2,11 @@
     <div>
         <input id="stream_{{@index}}" type="checkbox">
         <label for="stream_{{@index}}">
-            <span class="title">{{this.name}}</span>
-            <span class="description">Funny stream containing movie mistakes</span>
+            <h3>
+                {{this.name}}
+                <small>by {{this.author.username}}</small>
+            </h3>
+            <p>Funny stream containing movie mistakes</p>
         </label>
     </div>
 {{else}}

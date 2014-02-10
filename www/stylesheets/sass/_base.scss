@@ -177,6 +177,10 @@ form {
     max-width:80%;
     font-weight:normal;
     margin-left:0.7em;
+
+    h3 {
+        margin-top: 0;
+    }
 }
 
 #movie_details .streams > div {
@@ -190,15 +194,6 @@ form {
 #movie_details {
     padding-left:0;
     padding-right:0;
-}
-
-#movie_details label .title {
-    display:block;
-    font-size:1.5em;
-}
-
-#movie_details label .description {
-
 }
 
 #start_playing_button {
