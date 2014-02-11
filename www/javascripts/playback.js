@@ -9,6 +9,9 @@ if ( newStream != null ) {
     localStorage.removeItem("playBackNewStream");
 }
 
+// TODO: newStream not enough for testing it
+var inEditMode = newStream;
+
 // need some global references
 var pauseAt = null;
 var startAt = new Date().getTime();
@@ -288,6 +291,27 @@ function showEntry(data, entryInMs, nofocus) {
 
     var el = $(renderedHtml);
     el.attr('data-entrypoint', "" + entryInMs);
+
+    console.log(data);
+    // If in create/edit mode => show delete btn
+    if ( inEditMode ) {
+        var deleteBtn = $('<button class="btn btn-danger delete_entry"><i class="fa fa-trash-o"></i> Delete story</button>');
+        deleteBtn.hammer().on('tap', function() {
+            $(this).fadeOut(function() {
+
+                // TODO: add the marvin delete call
+
+                $(this).remove();
+            });
+        });
+
+        // No need to show stream label in create/edit mode
+        el.find('> span.label:first').remove();
+
+        // Add the dilite btn to dom
+        deleteBtn.prependTo(el);
+    }
+
     innerViewport.append(el);
     // Ensure size of element is correct
     fixSizeOfEntries(el);
