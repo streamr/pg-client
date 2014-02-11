@@ -27,7 +27,8 @@ $('#container').html(renderedHtml);
 streamrInit();
 
 // Cache some selectors
-var innerViewport = $('#content #inner_viewport');
+var $content = $('#content');
+var innerViewport = $('#inner_viewport');
 
 // Make sure entries are always of correct size
 var fixSizeOfEntriesTimeout = null;
@@ -60,7 +61,7 @@ function fixSizeOfEntries(el) {
     }
 
     var innerViewportCssHeight = innerViewport.css('height');
-    var entryWidth = $(window).width() - 30; // -30 px because of padding of parent element
+    var entryWidth = $content.width();
 
     entryElements.each(function() {
         var el = $(this);
@@ -269,9 +270,10 @@ function focusToEntry(index, suppressNotifications) {
         }
     }
 
+    // Focus viewport to the wanted entry
+    var width = $content.width() + 30; // 30 from margin
     innerViewport.css({
-        // Focus viewport to the wanted entry
-        'transform': 'translate3d(' + ( - index * $(window).width() ) + 'px,0,0)'
+        'transform': 'translate3d(' + ( - index * width ) + 'px,0,0)'
     });
 
 }
@@ -322,16 +324,18 @@ $('#add_item_button').hammer().on('tap', function(event) {
 });
 
 innerViewport.parent().hammer({
-    'swipe_velocity': 0.1,
-    'prevent_default': true
+    'swipe_velocity': 0.1
 }).on('swiperight', function(event) {
+    event.gesture.preventDefault();
+    event.gesture.stopPropagation();
     focusToEntry(currentEntryInViewport - 1, true);
 });
 
 innerViewport.parent().hammer({
-    'swipe_velocity': 0.1,
-    'prevent_default': true
+    'swipe_velocity': 0.1
 }).on('swipeleft', function(event) {
+    event.gesture.preventDefault();
+    event.gesture.stopPropagation();
     focusToEntry(currentEntryInViewport + 1, true);
 });
 

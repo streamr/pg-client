@@ -21,9 +21,24 @@ $textColor: #c8c8c8;
     margin-right:30px;
 }
 
+.entry div.img {
+    float:left;
+    margin-right:1em;
+    margin-bottom:.5em;
+}
+
 .movie_details_container {
     // We have a fixed toolbar in the bottom of the page
     // so we need padding to ensure that the toolbar
     // doesn't overlap with actual content
     padding-bottom:64px;
+}
+
+// Ensure min-width for floating paragraphs
+// Credits: http://css-tricks.com/minimum-paragraph-widths/
+.wikipedia_entry p:before {
+    content: "";
+    width: 10em;
+    display: block;
+    overflow: hidden;
 }
