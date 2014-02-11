@@ -17,11 +17,19 @@
         }, function(data) {
             setAuthToken(data.auth_token);
 
-            // Save username
-            localStorage.setItem('username', form.find('[name="username"]').val());
+            setUser(data.user);
+
+            // Check if login redirect requested
+            if ( localStorage.getItem("loginRedirect") ) {
+                var loginRedirect = localStorage.getItem("loginRedirect");
+                localStorage.removeItem("loginRedirect");
+                window.location = loginRedirect;
+            }
 
             // Just close the login window
-            steroids.layers.pop();
+            else {
+                steroids.layers.pop();
+            }
 
         });
 

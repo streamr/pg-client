@@ -1,30 +1,63 @@
 // Update list of streams
-// TODO
 
+if ( !requireLogin("You must login first!", "your_streams.html") ) {
+    return;
+}
+
+streamrInit();
+
+var user = getUser();
 var $yourStreams = $('#your_streams');
 
-marvin.streams.get(movie.href, function(data) {
-    movieInfo = data.movie;
-    var renderedHtml = marvin.templates.movie_streams(data.movie);
+marvin.users.get(user.href, function(data) {
+    console.log(data);
+
+    var renderedHtml = marvin.templates.your_streams({
+        'streams': data.user.streams
+    });
 
     $yourStreams.html(renderedHtml);
 
     // Unpublishing
     $yourStreams.find('button.btn-warning').hammer().on('tap', function() {
-        // TODO
-        marvin.streams.unpublish();
+        var el = $(this);
+        var $streamEl = el.parents('.your_stream:first');
+        $streamEl.addClass('loading');
+        var streamHref = $streamEl.attr('data-stream-url');
+        marvin.streams.unpublish(streamHref + "/unpublish", function(response) {
+            $streamEl.removeClass('loading');
+            $streamEl.removeClass('published').addClass('unpublished');
+        });
     });
+
     // Publishing
     $yourStreams.find('button.btn-success').hammer().on('tap', function() {
-        // TODO
-        marvin.streams.publish();
+        var el = $(this);
+        var $streamEl = el.parents('.your_stream:first');
+        $streamEl.addClass('loading');
+        var streamHref = $streamEl.attr('data-stream-url');
+        marvin.streams.publish(streamHref + "/publish", function(response) {
+            $streamEl.removeClass('loading');
+            $streamEl.removeClass('unpublished').addClass('published');
+        });
     });
+
     // Deleting
     $yourStreams.find('button.btn-danger').hammer().on('tap', function() {
-        // TODO
         if ( confirm("Are you sure? The stream is gone forever after this.") ) {
-            marvin.streams.remove();
+            var el = $(this);
+            var $streamEl = el.parents('.your_stream:first');
+            $streamEl.addClass('loading');
+            var streamHref = $streamEl.attr('data-stream-url');
+            marvin.streams.remove(streamHref, function(response) {
+                // TODO
+                console.log(response);
+                $streamEl.fadeOut(function() {
+                    $(this).remove();
+                });
+            });
         }
     });
+
 });
 

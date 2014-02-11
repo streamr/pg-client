@@ -27,3 +27,57 @@ $textColor: #c8c8c8;
     // doesn't overlap with actual content
     padding-bottom:64px;
 }
+
+#your_streams .your_stream {
+
+    height:auto;
+    padding:.5em 1em;
+
+    h2 {
+        margin:0;
+    }
+
+    h3 {
+        margin-top:.3em;
+        color:gray;
+    }
+
+    .loading {
+        display:none;
+    }
+
+    .btn {
+        margin-bottom:.5em;
+    }
+
+    .playMovie {
+        margin-right:.8em;
+    }
+}
+
+#your_streams .your_stream.published {
+    .publish {
+        display:none;
+    }
+}
+
+#your_streams .your_stream.unpublished {
+    .unpublish {
+        display:none;
+    }
+}
+
+#your_streams .your_stream.loading {
+    .loading {
+        font-size:1em;
+        height:37px;
+        margin:0;
+        padding:0;
+        margin-top:-10px;
+        display:block;
+    }
+
+    .btn {
+        display:none;
+    }
+}

@@ -1,15 +1,18 @@
 {{#if streams}}
     {{#each streams}}
-        <div data-movie-url="{{ this.href }}" class="search-result-movie your_stream">
-            <h2>{{stream_title}}</h2>
+        <div data-movie-url="{{ this.href }}"
+            data-stream-url="{{ this.href }}"
+            class="search-result-movie your_stream {{#if this.published}}published{{else}}unpublished{{/if}}">
+            <h2>{{this.name}}</h2>
             <h3>Movie: {{movie_title}}</h3>
             <div class="actions">
-                {{#if is_published}}
-                    <button class="btn btn-success"><i class="fa fa-arrow-circle-up"></i> Publish</button>
-                {{else}}
-                    <button class="btn btn-warning"><i class="fa fa-arrow-circle-down"></i> Unpublish</button>
-                {{/if}}
-                <button class="btn btn-danger"><i class="fa fa-trash-o"></i> Delete</button>
+                <div class="loading">
+                        <i class="fa fa-cog fa-spin"></i>
+                </div>
+                <button class="btn btn-primary playMovie"><i class="fa fa-play-circle"></i> Play</button>
+                <button class="btn btn-success publish"><i class="fa fa-arrow-circle-up"></i> Publish</button>
+                <button class="btn btn-warning unpublish"><i class="fa fa-arrow-circle-down"></i> Unpublish</button>
+                <button class="btn btn-danger delete"><i class="fa fa-trash-o"></i> Delete</button>
             </div>
         </div>
     {{/each}}
