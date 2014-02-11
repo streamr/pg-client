@@ -1,3 +1,8 @@
+/* global steroids */
+
+// Hide the navbar
+steroids.view.navigationBar.hide();
+
 // How long elements should have class "active"
 // when tap event is fired (milliseconds)
 var touchFeedbackDelay = 100;
