@@ -155,8 +155,7 @@ if ( newStream == null ) {
         (function (tmp, i) {
             marvin.entries.get(tmp._links.entries, function(data) {
                 addEntriesToSortedEntries(i, data.entries);
-             });
-
+            });
         })(tmp, i);
     }
 }

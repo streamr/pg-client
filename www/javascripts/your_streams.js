@@ -18,6 +18,21 @@ marvin.users.get(user.href, function(data) {
 
     $yourStreams.html(renderedHtml);
 
+    // Playing stream
+    $yourStreams.find('button.btn-warning').hammer().on('tap', function() {
+        var el = $(this);
+        var $streamEl = el.parents('.your_stream:first');
+        var streamHref = $streamEl.attr('data-stream-url');
+        var movieHref = $streamEl.attr('data-movie-url');
+
+        startPlayback({
+            'name': $streamEl.find('h2').html(),
+            '_links': {
+                'entries': 'TODO' // TODO
+            }
+        });
+    });
+
     // Unpublishing
     $yourStreams.find('button.btn-warning').hammer().on('tap', function() {
         var el = $(this);

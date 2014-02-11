@@ -74,3 +74,16 @@ function logoutUser() {
     localStorage.removeItem("username");
     localStorage.removeItem("user");
 }
+
+function startPlayback( selectedStreams ) {
+    if ( !$.isArray(selectedStreams) ) {
+        selectedStreams = [selectedStreams];
+    }
+
+    // Save to localStorage info about the selected streams
+    localStorage.setItem("selectedStreams", JSON.stringify(selectedStreams));
+
+    // Load the playback view
+    var webView = new steroids.views.WebView( "playback.html" );
+    steroids.layers.push(webView);
+}
