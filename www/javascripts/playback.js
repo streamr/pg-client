@@ -188,6 +188,11 @@ function checkForStreamEntriesToShow( skipPauseCheck ) {
                 'streamName': selectedStreams[entry.streamIndex].name,
                 'entry': entry.entry
             }, entry.entry.entry_point_in_ms, true);
+
+            // Focus to latest entry if user didn't manually specify jump position
+            if ( skipPauseCheck === undefined ) {
+                focusToEntry("last");
+            }
         }
 
         else {
@@ -195,28 +200,31 @@ function checkForStreamEntriesToShow( skipPauseCheck ) {
         }
     }
 
-    // Ensure we show correct entry
-    var entries = innerViewport.find('> div');
-    if ( entries.length > 0 ) {
+    // Ensure we show correct entry if user manually jumped to specific point in video
+    if ( skipPauseCheck !== undefined ) {
 
-        for ( var i = 0; i < entries.length; i ++ ) {
-            var entryPointInMs = parseInt( $(entries[i]).attr('data-entrypoint') );
+        var entries = innerViewport.find('> div');
+        if ( entries.length > 0 ) {
 
-            if ( entryPointInMs > playbackPosition ) {
-                if ( i < 0 ) {
-                    i = 0;
+            for ( var i = 0; i < entries.length; i ++ ) {
+                var entryPointInMs = parseInt( $(entries[i]).attr('data-entrypoint') );
+
+                if ( entryPointInMs > playbackPosition ) {
+                    if ( i < 0 ) {
+                        i = 0;
+                    }
+                    else {
+                        i -= 1;
+                    }
+
+                    focusToEntry(i);
+                    return;
                 }
-                else {
-                    i -= 1;
-                }
-
-                focusToEntry(i);
-                return;
             }
-        }
 
-        // Focus to latest entry if no other entry found
-        focusToEntry(entries.length - 1);
+            // Focus to latest entry if no other entry found
+            focusToEntry(entries.length - 1);
+        }
     }
 }
 var entriesInterval = setInterval(checkForStreamEntriesToShow, 500);
