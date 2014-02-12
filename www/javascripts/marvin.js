@@ -202,20 +202,51 @@ var marvin = (function ($) {
             });
         }
 
+        function entries(url, callback) {
+            marvin.entries.get(url + "/entries", callback);
+        }
+
         function remove(url, callback){
-            $.ajax({
-                url: url,
-                type: 'DELETE',
-                headers: {
-                    'Authorization': 'Token ' + getAuthToken()
-                },
-                success: function (data) {
-                    callback(data);
-                },
-                error: function (data, textStatus, errorThrown) {
-                    errorHandler(textStatus, errorThrown);
-                }
-            });
+
+            // TODO: currently, we have manually delete entries before deleting stream
+            // this will be fixed later in Marvin
+            var entriesToDelete;
+            function deleteSingleEntry() {
+                marvin.entries.remove(entriesToDelete[0].href, function(data) {
+                    if ( data.msg == "Entry deleted." ) {
+                        entriesToDelete.splice(0,1);
+                        if ( entriesToDelete.length > 0 ) {
+                            deleteSingleEntry();
+                        }
+                        else {
+                            deleteWholeStream();
+                        }
+                    }
+                    else {
+                        console.log("Error deleting single entry");
+                    }
+                });
+            };
+            marvin.streams.entries(url, function(data) {
+                entriesToDelete = data.entries;
+                deleteSingleEntry();
+            }); 
+            
+            function deleteWholeStream() {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    headers: {
+                        'Authorization': 'Token ' + getAuthToken()
+                    },
+                    success: function (data) {
+                        callback(data);
+                    },
+                    error: function (data, textStatus, errorThrown) {
+                        errorHandler(textStatus, errorThrown);
+                    }
+                });
+            }
         }
 
         function get(url, callback){
@@ -223,20 +254,6 @@ var marvin = (function ($) {
                 url: url,
                 success: function (data) {
                     callback(data);
-                },
-                error: function (data, textStatus, errorThrown) {
-                    errorHandler(textStatus, errorThrown);
-                }
-            });
-        }
-
-        function entries(url, callback) {
-            $.ajax({
-                url: url + '/entries',
-                success: function (data) {
-                    if (callback !== undefined) {
-                        callback(data);
-                    }
                 },
                 error: function (data, textStatus, errorThrown) {
                     errorHandler(textStatus, errorThrown);
