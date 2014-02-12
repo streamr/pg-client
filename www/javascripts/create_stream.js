@@ -9,7 +9,8 @@
         var form = $('#create_stream_form');
 
         marvin.streams.create(movie._links.createStream, {
-            'name': form.find('[name="name"]').val()
+            'name': form.find('[name="name"]').val(),
+            'description': form.find('[name="description"]').val()
         }, function(data) {
 
             localStorage.setItem("playBackNewStream", JSON.stringify(data.stream));

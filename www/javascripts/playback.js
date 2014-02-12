@@ -537,5 +537,4 @@ $('#timeseek_btn').hammer().on('tap', function(e) {
     }
 
     $timePopup.addClass('active');
-
 });
