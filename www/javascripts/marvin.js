@@ -229,7 +229,12 @@ var marvin = (function ($) {
             };
             marvin.streams.entries(url, function(data) {
                 entriesToDelete = data.entries;
-                deleteSingleEntry();
+                if ( entriesToDelete.length > 0 ) {
+                    deleteSingleEntry();
+                }
+                else {
+                    deleteWholeStream();
+                }
             }); 
             
             function deleteWholeStream() {
