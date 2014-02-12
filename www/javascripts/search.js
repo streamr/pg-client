@@ -1,9 +1,13 @@
 (function ($, marvin) {
     "use strict";
 
-    var $searchField = $('.movie-search');
+    // Need to keep track of this, because otherwise
+    // tapping a movie when the settings drawer is open
+    // will cause the movie to be opened (when we only
+    // wanted to close the drawer)
+    var hideDrawerTouch = false;
 
-    $searchField.on('keyup', searchMovies);
+    var $searchField = $('.movie-search');
 
     var searchRequest = null;
     function searchMovies() {
@@ -21,6 +25,9 @@
 
             // When search result is tapped => show details about movie
             $('#search_results > div').hammer().on('tap', function(e) {
+
+                if ( hideDrawerTouch ) return;
+
                 var el = $(this);
 
                 // Check if drawer is open => just close it and do nothing else
@@ -101,6 +108,8 @@
     var drawerOpen = false;
 
     function showDrawer() {
+        $('input').blur();
+
         if ( drawerPosition == null ) {
             var menuButton = $('#menu-button');
             drawerPosition = $(window).width() - (menuButton.offset().left + menuButton.width() + 40);
@@ -116,7 +125,11 @@
         drawerOpen = false;
     }
 
-    $('#menu-button').hammer({
+    $('#menu-button').on('touchstart', function(e) {
+        // Otherwise the drawer is "double" closed
+        e.preventDefault();
+        e.stopPropagation();
+    }).hammer({
         'prevent_default': true,
     }).on('tap', function(e) {
         if ( drawerOpen ) {
@@ -126,15 +139,19 @@
             showDrawer();
         }
     });
-    mainContentEl.hammer({
-        'swipe_velocity': 1
-    }).on('swipeleft', function(e) {
-        hideDrawer();
+
+    mainContentEl.on('touchstart', function(e) {
+        if ( drawerOpen ) {
+            hideDrawer();
+            hideDrawerTouch = true;
+            setTimeout(function() {
+                hideDrawerTouch = false;
+            }, 200);
+        }
     });
-    mainContentEl.hammer({
-        'swipe_velocity': 0.1
-    }).on('swiperight', function(e) {
-        showDrawer();
+
+    $('#settings').on('touchmove', function(e) {
+        e.preventDefault();
     });
 
     // Need to update page content when coming back from other pages
