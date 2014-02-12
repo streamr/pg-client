@@ -32,14 +32,23 @@ marvin.users.get(user.href, function(data) {
         var el = $(this);
         var $streamEl = el.parents('.your_stream:first');
         var streamHref = $streamEl.attr('data-stream-url');
+        var movieHref = $streamEl.attr('data-movie-url');
 
-        startPlayback({
-            'name': $streamEl.find('h2').html(),
-            '_links': {
-                'createEntry': streamHref + "/createEntry",
-                'entries':  streamHref + "/entries"
-            }
-        }, true);
+        $streamEl.addClass('loading');
+
+        // Show loading while we fetch movie information
+        marvin.movies.get(movieHref, function(data) {
+            $streamEl.removeClass('loading');
+            localStorage.setItem("movieDetailsMovie", JSON.stringify(data));
+
+            startPlayback({
+                'name': $streamEl.find('h2').html(),
+                '_links': {
+                    'createEntry': streamHref + "/createEntry",
+                    'entries':  streamHref + "/entries"
+                }
+            }, true);
+        });
     });
 
     // Unpublishing
