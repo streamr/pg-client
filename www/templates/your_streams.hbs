@@ -1,7 +1,6 @@
 {{#if streams}}
     {{#each streams}}
-        <div data-movie-url="{{ this.href }}"
-            data-stream-url="{{ this.href }}"
+        <div data-stream-url="{{ this.href }}"
             class="search-result-movie your_stream {{#if this.published}}published{{else}}unpublished{{/if}}">
             <h2>{{this.name}}</h2>
             <h3>Movie: {{movie_title}}</h3>

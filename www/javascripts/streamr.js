@@ -75,7 +75,12 @@ function logoutUser() {
     localStorage.removeItem("user");
 }
 
-function startPlayback( selectedStreams ) {
+function startPlayback( selectedStreams, editMode ) {
+
+    if ( editMode )  {
+        localStorage.setItem("streamEditMode", JSON.stringify(selectedStreams));
+    }
+
     if ( !$.isArray(selectedStreams) ) {
         selectedStreams = [selectedStreams];
     }

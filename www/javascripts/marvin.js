@@ -222,9 +222,6 @@ var marvin = (function ($) {
                             deleteWholeStream();
                         }
                     }
-                    else {
-                        console.log("Error deleting single entry");
-                    }
                 });
             };
             marvin.streams.entries(url, function(data) {
