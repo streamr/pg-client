@@ -1,0 +1,20 @@
+{{#if streams}}
+    {{#each streams}}
+        <div data-stream-url="{{ this.href }}"
+            class="search-result-movie your_stream {{#if this.published}}published{{else}}unpublished{{/if}}">
+            <h2>{{this.name}}</h2>
+            <h3>Movie: {{movie_title}}</h3>
+            <div class="actions">
+                <div class="loading">
+                        <i class="fa fa-cog fa-spin"></i>
+                </div>
+                <button class="btn btn-primary playMovie"><i class="fa fa-play-circle"></i> Play</button>
+                <button class="btn btn-success publish"><i class="fa fa-arrow-circle-up"></i> Publish</button>
+                <button class="btn btn-warning unpublish"><i class="fa fa-arrow-circle-down"></i> Unpublish</button>
+                <button class="btn btn-danger delete"><i class="fa fa-trash-o"></i> Delete</button>
+            </div>
+        </div>
+    {{/each}}
+{{else}}
+    <p>You don't currently have any streams.</p>
+{{/if}}

@@ -39,9 +39,18 @@ function streamrInit(element) {
 }
 
 function requireLogin(message, returnToUrl) {
-    // TODO: use this function anytime the user requests a page that requires login.
+    // Use this function anytime the user requests a page that requires login.
     // User will only get to page if registered && logged in.
     // Otherwise redirect to account creation / login page
+
+    if ( !getUser() ) {
+        alert(message);
+        localStorage.setItem("loginRedirect", returnToUrl);
+        window.location = "user_registration.html";
+        return false;
+    }
+
+    return true;
 }
 
 function setAuthToken(token) {
@@ -53,11 +62,33 @@ function getAuthToken() {
 }
 
 function setUser(user) {
-    localStorage.setItem("user", user);
+    localStorage.setItem("user", JSON.stringify(user));
+}
+
+function getUser() {
+    return JSON.parse( localStorage.getItem("user") );
 }
 
 function logoutUser() {
     localStorage.removeItem("authToken");
     localStorage.removeItem("username");
     localStorage.removeItem("user");
+}
+
+function startPlayback( selectedStreams, editMode ) {
+
+    if ( editMode )  {
+        localStorage.setItem("streamEditMode", JSON.stringify(selectedStreams));
+    }
+
+    if ( !$.isArray(selectedStreams) ) {
+        selectedStreams = [selectedStreams];
+    }
+
+    // Save to localStorage info about the selected streams
+    localStorage.setItem("selectedStreams", JSON.stringify(selectedStreams));
+
+    // Load the playback view
+    var webView = new steroids.views.WebView( "playback.html" );
+    steroids.layers.push(webView);
 }

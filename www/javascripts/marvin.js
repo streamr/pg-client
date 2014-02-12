@@ -119,7 +119,8 @@ var marvin = (function ($) {
         }
 
         function get(url, callback) {
-            $.ajax({
+
+            var request = {
                 url: url,
                 success: function (data) {
                     if (callback !== undefined) {
@@ -129,7 +130,16 @@ var marvin = (function ($) {
                 error: function (data, textStatus, errorThrown) {
                     errorHandler(textStatus, errorThrown);
                 }
-            });
+            };
+
+            // Always send auth token, so that owner of stream can preview it
+            if ( getAuthToken() ) {
+                request.headers = {
+                    'Authorization': 'Token ' + getAuthToken()
+                };
+            }
+
+            $.ajax(request);
         }
 
         return {
@@ -160,6 +170,87 @@ var marvin = (function ($) {
             });
         }
 
+        function publish(url, callback){
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Token ' + getAuthToken()
+                },
+                success: function (data) {
+                    callback(data);
+                },
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
+                }
+            });
+        }
+
+        function unpublish(url, callback){
+            $.ajax({
+                url: url,
+                type: 'POST',
+                headers: {
+                    'Authorization': 'Token ' + getAuthToken()
+                },
+                success: function (data) {
+                    callback(data);
+                },
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
+                }
+            });
+        }
+
+        function entries(url, callback) {
+            marvin.entries.get(url + "/entries", callback);
+        }
+
+        function remove(url, callback){
+
+            // TODO: currently, we have manually delete entries before deleting stream
+            // this will be fixed later in Marvin
+            var entriesToDelete;
+            function deleteSingleEntry() {
+                marvin.entries.remove(entriesToDelete[0].href, function(data) {
+                    if ( data.msg == "Entry deleted." ) {
+                        entriesToDelete.splice(0,1);
+                        if ( entriesToDelete.length > 0 ) {
+                            deleteSingleEntry();
+                        }
+                        else {
+                            deleteWholeStream();
+                        }
+                    }
+                });
+            };
+            marvin.streams.entries(url, function(data) {
+                entriesToDelete = data.entries;
+                if ( entriesToDelete.length > 0 ) {
+                    deleteSingleEntry();
+                }
+                else {
+                    deleteWholeStream();
+                }
+            }); 
+            
+            function deleteWholeStream() {
+                $.ajax({
+                    url: url,
+                    type: 'DELETE',
+                    headers: {
+                        'Authorization': 'Token ' + getAuthToken()
+                    },
+                    success: function (data) {
+                        callback(data);
+                    },
+                    error: function (data, textStatus, errorThrown) {
+                        errorHandler(textStatus, errorThrown);
+                    }
+                });
+            }
+        }
+
         function get(url, callback){
             $.ajax({
                 url: url,
@@ -172,24 +263,13 @@ var marvin = (function ($) {
             });
         }
 
-        function entries(url, callback) {
-            $.ajax({
-                url: url + '/entries',
-                success: function (data) {
-                    if (callback !== undefined) {
-                        callback(data);
-                    }
-                },
-                error: function (data, textStatus, errorThrown) {
-                    errorHandler(textStatus, errorThrown);
-                }
-            });
-        }
-
         return {
             'create': create,
             'get': get,
-            'entries': entries
+            'entries': entries,
+            'publish': publish,
+            'unpublish': unpublish,
+            'remove': remove
         };
 
     })();
@@ -226,9 +306,12 @@ var marvin = (function ($) {
             });
         }
 
-        function get(userId, callback){
+        function get(url, callback){
             $.ajax({
-                url: baseUrl + '/users/' + userId,
+                url: url,
+                headers: {
+                    'Authorization': 'Token ' + getAuthToken()
+                },
                 success: function (data) {
                     callback(data);
                 },

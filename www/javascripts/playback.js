@@ -9,6 +9,20 @@ if ( newStream != null ) {
     localStorage.removeItem("playBackNewStream");
 }
 
+var editStreamObject = null;
+
+if ( newStream != null ) {
+    var editStreamObject = newStream;
+}
+else if ( localStorage.getItem("streamEditMode") !== undefined ) {
+    var editStreamObject = JSON.parse(localStorage.getItem("streamEditMode"));
+
+    // Be sure to disable editmode by default for next playback
+    localStorage.removeItem("streamEditMode");
+}
+
+var inEditMode = editStreamObject !== null;
+
 // need some global references
 var pauseAt = null;
 var startAt = new Date().getTime();
@@ -19,7 +33,7 @@ var currentEntryInViewport;
 
 var renderedHtml = marvin.templates.playback({
     movie: movie,
-    newStream: newStream
+    inEditMode: inEditMode
 });
 
 $('#container').html(renderedHtml);
@@ -99,15 +113,19 @@ function checkForNewEntriesToAdd() {
 
         data.entry_point_in_ms = entryPointInMs;
 
+        // Entry point can't be zero (problem with Marvin?)
+        if ( data.entry_point_in_ms == 0 ) {
+            data.entry_point_in_ms += 10;
+        }
+
         data.content = JSON.stringify(data.content);
 
-        marvin.entries.create(newStream._links.createEntry,
+        marvin.entries.create(editStreamObject._links.createEntry,
             data,
             function(reply) {
-                //steroids.layers.pop();
                 showEntry({
-                    'streamName': newStream.name,
-                    'entry': data
+                    'streamName': editStreamObject.name,
+                    'entry': reply.entry
                 }, data.entry_point_in_ms);
             }
         );
@@ -153,8 +171,7 @@ if ( newStream == null ) {
         (function (tmp, i) {
             marvin.entries.get(tmp._links.entries, function(data) {
                 addEntriesToSortedEntries(i, data.entries);
-             });
-
+            });
         })(tmp, i);
     }
 }
@@ -298,12 +315,57 @@ function showEntry(data, entryInMs, nofocus) {
 
     var el = $(renderedHtml);
     el.attr('data-entrypoint', "" + entryInMs);
-    innerViewport.append(el);
+    el.attr('data-entry-url', data.entry.href);
+
+    // If in create/edit mode => show delete btn
+    if ( inEditMode ) {
+        var deleteBtn = $('<button class="btn btn-danger delete_entry"><i class="fa fa-trash-o"></i> Delete story</button>');
+        deleteBtn.hammer().on('tap', function() {
+
+            var $entryEl = $(this).parents('div.entry:first');
+            var entryURL = $entryEl.attr('data-entry-url');
+
+            $entryEl.fadeOut(function() {
+                marvin.entries.remove(entryURL);
+
+                $(this).remove();
+
+                // Focus to previous entry
+                focusToEntry(currentEntryInViewport - 1);
+            });
+        });
+
+        // No need to show stream label in create/edit mode
+        el.find('> span.label:first').remove();
+
+        // Add the delete btn to DOM
+        deleteBtn.prependTo(el);
+    }
+
+    // Make sure we insert the entry in correct position
+    var allEntries = innerViewport.find('> div.entry');
+    var elInjected = false;
+
+    for ( var i = 0; i < allEntries.length; i ++ ) {
+        var tmpEntry = $(allEntries[i]);
+        var entryPointInMs = parseInt(tmpEntry.attr('data-entrypoint'));
+
+        if ( entryPointInMs > entryInMs ) {
+            el.insertBefore(tmpEntry);
+            elInjected = true;
+            break;
+        }
+    }
+
+    if ( !elInjected ) {
+        innerViewport.append(el);
+    }
+
     // Ensure size of element is correct
     fixSizeOfEntries(el);
 
     if ( nofocus !== true ) {
-        focusToEntry("last");
+        focusToEntry(i);
     }
 }
 

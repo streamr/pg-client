@@ -1,5 +1,9 @@
 <div class="list-group">
-    {{#if username}}
+    {{#if user}}
+        <a class="list-group-item">
+            <h4 class="list-group-item-heading"><i class="fa fa-user"></i> Your streams</h4>
+            <button class="btn btn-primary" data-tap-url="your_streams.html"><i class="fa fa-tags"></i> See your streams</button>
+        </a>
         <a class="list-group-item">
             <h4 class="list-group-item-heading"><i class="fa fa-user"></i> Logged in as {{username}}</h4>
             <button class="btn btn-primary" id="logout_btn"><i class="fa fa-sign-out"></i> Logout</button>

@@ -73,7 +73,7 @@
 
         // Set content for settings page
         var renderedHtml = marvin.templates.settings({
-            'username': localStorage.getItem('username')
+            'user': getUser()
         });
 
         var $settingsBody = $('#settings_body');

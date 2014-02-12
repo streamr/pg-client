@@ -46,12 +46,6 @@ $('#start_playing_button').hammer().on('tap', function(event) {
         return;
     }
 
-    // Save to localStorage info about the selected streams
-    localStorage.setItem("selectedStreams", JSON.stringify(selectedStreams));
-
-    // Load the playback view
-    var webView = new steroids.views.WebView( "playback.html" );
-    steroids.layers.push(webView);
-
+    startPlayback(selectedStreams);
 });
 
