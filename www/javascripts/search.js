@@ -8,6 +8,7 @@
     var hideDrawerTouch = false;
 
     var $searchField = $('.movie-search');
+    $searchField.on('keyup', searchMovies);
 
     var searchRequest = null;
     function searchMovies() {

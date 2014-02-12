@@ -180,6 +180,8 @@ function getCurrentPlaybackPosition() {
     return new Date().getTime() - startAt;
 }
 
+var lastNewEntry = 0;
+
 // Show stream entries
 function checkForStreamEntriesToShow( skipPauseCheck ) {
 
@@ -218,29 +220,33 @@ function checkForStreamEntriesToShow( skipPauseCheck ) {
         }
     }
 
-    // Ensure we show correct entry if user manually jumped to specific point in video
-    if ( skipPauseCheck !== undefined ) {
 
-        var entries = innerViewport.find('> div');
-        if ( entries.length > 0 ) {
+    // Check if we have a new entry to show => focus to it
+    var entries = innerViewport.find('> div');
+    if ( entries.length > 0 ) {
 
-            for ( var i = 0; i < entries.length; i ++ ) {
-                var entryPointInMs = parseInt( $(entries[i]).attr('data-entrypoint') );
+        for ( var i = 0; i < entries.length; i ++ ) {
+            var entryPointInMs = parseInt( $(entries[i]).attr('data-entrypoint') );
 
-                if ( entryPointInMs > playbackPosition ) {
-                    if ( i < 0 ) {
-                        i = 0;
-                    }
-                    else {
-                        i -= 1;
-                    }
-
-                    focusToEntry(i);
-                    return;
+            if ( entryPointInMs > playbackPosition ) {
+                if ( i < 0 ) {
+                    i = 0;
                 }
-            }
+                else {
+                    i -= 1;
+                }
 
-            // Focus to latest entry if no other entry found
+                if ( i != lastNewEntry ) {
+                    lastNewEntry = i;
+                    focusToEntry(i);
+                }
+                return;
+            }
+        }
+
+        // Ensure we show correct entry if user manually jumped to specific point in video
+        // Focus to latest entry if no other entry found
+        if ( skipPauseCheck !== undefined ) {
             focusToEntry(entries.length - 1);
         }
     }
