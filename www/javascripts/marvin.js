@@ -207,48 +207,19 @@ var marvin = (function ($) {
         }
 
         function remove(url, callback){
-
-            // TODO: currently, we have manually delete entries before deleting stream
-            // this will be fixed later in Marvin
-            var entriesToDelete;
-            function deleteSingleEntry() {
-                marvin.entries.remove(entriesToDelete[0].href, function(data) {
-                    if ( data.msg == "Entry deleted." ) {
-                        entriesToDelete.splice(0,1);
-                        if ( entriesToDelete.length > 0 ) {
-                            deleteSingleEntry();
-                        }
-                        else {
-                            deleteWholeStream();
-                        }
-                    }
-                });
-            };
-            marvin.streams.entries(url, function(data) {
-                entriesToDelete = data.entries;
-                if ( entriesToDelete.length > 0 ) {
-                    deleteSingleEntry();
+            $.ajax({
+                url: url,
+                type: 'DELETE',
+                headers: {
+                    'Authorization': 'Token ' + getAuthToken()
+                },
+                success: function (data) {
+                    callback(data);
+                },
+                error: function (data, textStatus, errorThrown) {
+                    errorHandler(textStatus, errorThrown);
                 }
-                else {
-                    deleteWholeStream();
-                }
-            }); 
-            
-            function deleteWholeStream() {
-                $.ajax({
-                    url: url,
-                    type: 'DELETE',
-                    headers: {
-                        'Authorization': 'Token ' + getAuthToken()
-                    },
-                    success: function (data) {
-                        callback(data);
-                    },
-                    error: function (data, textStatus, errorThrown) {
-                        errorHandler(textStatus, errorThrown);
-                    }
-                });
-            }
+            });
         }
 
         function get(url, callback){

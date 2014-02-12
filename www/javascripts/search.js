@@ -88,7 +88,9 @@
 
         $settingsBody.html(renderedHtml).find('#logout_btn').hammer().on('tap', function() {
             logoutUser();
-            refreshSettingsPage();
+            setTimeout(function() {
+                refreshSettingsPage();
+            }, 150);
         });
 
         var notificationLevel = localStorage.getItem("notificationLevel") || "none";
